@@ -1,0 +1,10 @@
+.eslintrc.js
+node_modules/**/*.js
+react-app-env.d.ts
+reportWebVitals.ts
+setupTests.ts
+workspace.code-workspace
+.gitignore
+.prettierignore
+.prettierrc.extension.json
+settings.json
