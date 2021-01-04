@@ -14,6 +14,9 @@ module.exports = {
         "tsx": "never"
       }
    ],
-    "@typescript-eslint/no-unused-vars": "warn",   
+    // "@typescript-eslint/no-unused-vars": "warn",  
+    "@typescript-eslint/comma-dangle": 0,
+    "@typescript-eslint/quotes": [1, "double"],
+    "implicit-arrow-linebreak": 0
   }
 };
