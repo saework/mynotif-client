@@ -1,0 +1,111 @@
+
+//БЭМ
+//имя-блока__имя-элемента_имя-модификатора_значение-модификатора
+//my-block__my-button_size_m
+
+//импорт файла _main.scss
+@import 'main';
+@import "~bootstrap/scss/bootstrap";
+
+
+
+.main-page__bd-info{
+ // background-color: yellow;
+}
+.main-page__bd-form{
+ // background-color: green;
+}
+.message__alert_center{
+  display: flex;
+  justify-content: center;
+}
+
+
+.d1{
+  width: 50px;
+  height: 50px;
+  background-color: yellow;
+}
+.d2{
+  width: 70px;
+  height: 70px;
+  background-color: rgb(255, 123, 0);
+}
+.d3{
+  width: 90px;
+  height: 90px;
+  background-color: rgb(0, 110, 255);
+}
+.dd{
+  background-color: rgb(1, 6, 12);
+}
+     
+
+
+/////////////////////////////////////////////
+
+
+
+//переменные
+$main-color: red;
+$main-font: Arial;
+
+//расширения для классов
+%mainblocks{
+  background-color: yellow;
+  padding: 10px 10px 10px 10px;
+}
+
+.main-block__div{
+  color: $main-color;
+  @extend %mainblocks; 
+  //вложенные правила
+  div{
+    p{
+      font-family: $main-font;
+    }
+  }
+}
+//миксины
+@mixin marg($pix){
+  margin-top: $pix;
+  margin-left: $pix;
+  margin-bottom: $pix;
+  margin-right: $pix;
+  width: $pix*3;
+  height: $pix*3;
+}
+.left-block__div{
+  @include marg(10px);
+  @extend %mainblocks; 
+  div{
+    width: (10px + 10px)*2 ;
+  }
+}
+
+
+//функции
+$val1: 10px;
+$val2: 20px;
+@function fval($n, $x){
+  @return ($val1 * $n) + ($val2 * $x);
+}
+
+
+//математические вычисления
+.right-block__div{ 
+  @extend %mainblocks; 
+  width: fval(2,3);
+  height: (100px - 20px)/2 ;
+
+}
+
+//вложенные свойства
+.sv-block__div{
+  margin: {
+    left:  10px;
+    right: 10px;
+    top: 10px;
+    bottom: 10px;
+  }
+}
