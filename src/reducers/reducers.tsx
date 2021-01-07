@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
+import { IAction, IRootReducer, IBdRow, TActionPayload } from "../interfaces";
 
-// export const initialState = {
+
+// export const initialState : IRootReducer = {
 //   router: {
 //     location: {},
 //     action: "POP",
@@ -14,12 +16,13 @@ import { connectRouter } from "connected-react-router";
 //   },
 // };
 
-export const initialState = {
-  router: {
-    location: {},
-    action: "POP",
-  },
-  rootReducer: {
+export const initialState : IRootReducer = {
+ // export const initialState = {
+  // router: {
+  //   location: {},
+  //   action: "POP",
+  // },
+  // rootReducer: {
     currentUser: "test@test",
     currentId: 4,
     checkedId: 0,
@@ -43,11 +46,13 @@ export const initialState = {
         bdComm: "Очень длинный комментарий",
       },
     ],
-  },
+ // },
 };
 
-export function rootReducer(state = initialState, action) {
-  switch (action.type) {
+export function rootReducer(state : IRootReducer = initialState , action: IAction) {
+const payload: TActionPayload = action.payload;
+const type: string = action.type;
+switch (action.type) {
     // всегда возвращаем новый state!
     case "DRAW_ROWS": {
       return { ...state, bdRows: action.payload };
@@ -63,15 +68,16 @@ export function rootReducer(state = initialState, action) {
       };
     }
     case "DEL_BD_ROW": {
+      console.log(state);
       return {
         ...state,
         bdRows: [...state.bdRows.filter((item) => item.id !== action.payload)],
       };
     }
     case "EDIT_BD_ROW": { // редактирование записи
-      const editBdRow = action.payload;
+      const editBdRow: IBdRow=action.payload as IBdRow;
       return {
-        ...state, // возвращаем новый стор
+        ...state, // возвращаем новый state
         bdRows: state.bdRows.map((bdRow) => {
           if (bdRow.id === editBdRow.id) {
             return {
@@ -94,7 +100,7 @@ export function rootReducer(state = initialState, action) {
 }
 
 // данные в объекте rootReducer, а не store
-export const createRootReducer = (history) =>
+export const createRootReducer = (history: any) =>
   combineReducers({
     router: connectRouter(history),
     rootReducer,

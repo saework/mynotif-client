@@ -8,8 +8,8 @@ workspace.code-workspace
 .prettierignore
 .prettierrc.extension.json
 settings.json
-# build/
-# src/
-# *.js
-# *.jsx
-# *.tsx
+build/
+src/
+*.js
+*.jsx
+*.tsx

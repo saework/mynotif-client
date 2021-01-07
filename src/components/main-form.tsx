@@ -8,27 +8,34 @@ import { connect } from "react-redux";
 import moment from "moment";
 import { getCurrentId } from "../functions";
 import { addBdRow, editBdRow } from "../actions/actions";
+import { IAction, IRootReducer, IBdRows, IBdRow, IStore } from "../interfaces";
 // import { store } from "../store/store";
 // import { extendWith } from "lodash";
 
-function MainForm(props) {
+interface IProps {
+  addBdRow: (newbdRow: IBdRow) => void;
+  checkedId: number;
+  editBdRow: (newbdRow: IBdRow) => void;
+}
+
+function MainForm(props: IProps) {
   // const bdRows = props.bdRows;
   const [validated, setValidated] = useState(false);
 
-  const handleAddButtonClick = (e) => {
+  const handleAddButtonClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const form = e.currentTarget;
+    const form: any = e.currentTarget;
 
     if (form.checkValidity() === false) {
       setValidated(true);
     } else {
       const buttonAdd = $("#buttonAdd").html();
-      const persNameVal = $("#persName").val();
-      const bdDateVal = $("#bdDate").val();
-      const bdCommVal = $("#bdComm").val();
+      const persNameVal:string= $("#persName").val() as string;
+      const bdDateVal:string = $("#bdDate").val() as string;
+      const bdCommVal:string = $("#bdComm").val() as string;
 
       if (buttonAdd === "Добавить") {
-        const newbdRow = {
+        const newbdRow: IBdRow = {
           id: getCurrentId() + 1,
           persName: persNameVal,
           bdDate: bdDateVal,
@@ -54,9 +61,8 @@ function MainForm(props) {
       }
     }
   };
-
   return (
-    <Row md className="main-page__bd-form">
+    <Row md={1} className="main-page__bd-form">
       <Col>
         <Form noValidate validated={validated} onSubmit={handleAddButtonClick}>
           <Form.Row>
@@ -80,7 +86,7 @@ function MainForm(props) {
           </Form.Row>
           <Form.Group controlId="bdComm">
             <Form.Label>Комментарий</Form.Label>
-            <Form.Control as="textarea" rows="3" />
+            <Form.Control as="textarea" rows={3} />
           </Form.Group>
           {/* <Button type="submit" variant="success" size="lg" block>Добавить</Button> */}
           <Button id="buttonAdd" type="submit" variant="light" size="lg" block>
@@ -91,13 +97,13 @@ function MainForm(props) {
     </Row>
   );
 }
-const mapStateToProps = (store) => ({
+const mapStateToProps = (store: IStore) => ({
   bdRows: store.rootReducer.bdRows,
   checkedId: store.rootReducer.checkedId,
 });
-const mapDispatchToProps = (dispatch) => ({
-  addBdRow: (newbdRow) => dispatch(addBdRow(newbdRow)),
-  editBdRow: (editbdRow) => dispatch(editBdRow(editbdRow)),
+const mapDispatchToProps = (dispatch: any) => ({
+  addBdRow: (newbdRow: IBdRow) => dispatch(addBdRow(newbdRow)),
+  editBdRow: (editbdRow: IBdRow) => dispatch(editBdRow(editbdRow)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainForm);
