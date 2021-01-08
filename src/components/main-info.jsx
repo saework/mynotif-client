@@ -37,9 +37,10 @@ function MainInfo(props) {
           <thead>
             <tr>
               <th>№</th>
-              <th>ФИО</th>
-              <th>Дата</th>
-              <th>Комментарий</th>
+              <th>Название</th>
+              <th>Подробности</th>
+              <th>Дата, время</th>
+              <th>Период</th>
             </tr>
           </thead>
           <tbody>
@@ -47,8 +48,9 @@ function MainInfo(props) {
               <tr key={bdRow.id}>
                 <td>{index + 1}</td>
                 <td>{bdRow.persName}</td>
-                <td>{bdRow.bdDate}</td>
                 <td>{bdRow.bdComm}</td>
+                <td>{bdRow.bdDate}</td>
+                <td>Ежегодно</td>
                 <td>
                   <div>
                     <Button

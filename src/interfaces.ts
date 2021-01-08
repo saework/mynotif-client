@@ -26,3 +26,8 @@ export interface IAction {
   type: string,
   payload: TActionPayload 
 }
+export interface ItmzObj {
+  timeZoneValue: string,
+  timeZoneText: string
+}
+

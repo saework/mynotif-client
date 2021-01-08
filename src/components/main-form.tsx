@@ -6,11 +6,33 @@ import $ from "jquery";
 import { connect } from "react-redux";
 // import Functions from "../functions";
 import moment from "moment";
+import momenttz from "moment-timezone";
+import DatePicker, { registerLocale, setDefaultLocale } from  "react-datepicker";
+import ru from 'date-fns/locale/ru';
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
+import "react-datepicker/dist/react-datepicker.css";
 import { getCurrentId } from "../functions";
 import { addBdRow, editBdRow } from "../actions/actions";
-import { IAction, IRootReducer, IBdRows, IBdRow, IStore } from "../interfaces";
+import { IAction, IRootReducer, IBdRows, IBdRow, IStore, ItmzObj } from "../interfaces";
+registerLocale('ru', ru)
+
 // import { store } from "../store/store";
 // import { extendWith } from "lodash";
+const TIMEZONE = "Asia/Yekaterinburg";
+const DEFAULTPERIOD = "Без повторов";
+const periodArr =["Без повторов",  "Ежедневно", "Еженедельно", "ПН-ПТ", "Ежемесячно", "Ежегодно"];
+//const TIMEZONE = "Europe/Moscow";
+
+const timeZones = momenttz.tz.names();
+const tmzArr: ItmzObj[]=[];
+for(let i in timeZones)
+{
+  const tmzObj: ItmzObj =
+  {timeZoneValue:  timeZones[i],
+   timeZoneText: " (GMT"+moment.tz(timeZones[i]).format('Z')+") " + timeZones[i]}
+   tmzArr.push(tmzObj);
+}
 
 interface IProps {
   addBdRow: (newbdRow: IBdRow) => void;
@@ -21,6 +43,21 @@ interface IProps {
 function MainForm(props: IProps) {
   // const bdRows = props.bdRows;
   const [validated, setValidated] = useState(false);
+  const [startDate, setStartDate] = useState<any>(
+    setHours(setMinutes(new Date(), 0), 9)
+  );
+
+  const tmzSelectField = (tmzObj: any) => {
+    return(
+      <option value={tmzObj.timeZoneValue}>{tmzObj.timeZoneText}</option>
+    )
+  }
+  const periodSelectField = (period: string) => {
+    return(
+      <option value={period}>{period}</option>
+    )
+  }
+  
 
   const handleAddButtonClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -31,8 +68,10 @@ function MainForm(props: IProps) {
     } else {
       const buttonAdd = $("#buttonAdd").html();
       const persNameVal:string= $("#persName").val() as string;
-      const bdDateVal:string = $("#bdDate").val() as string;
+      const bdDateVal:string = $("#bdDateTime").val() as string;
       const bdCommVal:string = $("#bdComm").val() as string;
+      const bdTmzVal:string = $("#bdTmz").val() as string;
+      console.log(bdDateVal);
 
       if (buttonAdd === "Добавить") {
         const newbdRow: IBdRow = {
@@ -67,27 +106,60 @@ function MainForm(props: IProps) {
         <Form noValidate validated={validated} onSubmit={handleAddButtonClick}>
           <Form.Row>
             <Form.Group as={Col} controlId="persName">
-              <Form.Label>Имя</Form.Label>
-              <Form.Control required type="text" placeholder="ФИО" />
+              <Form.Label>Название уведомления:</Form.Label>
+              <Form.Control required type="text" />
               <Form.Control.Feedback type="invalid">
                 Заполните поле
               </Form.Control.Feedback>
-              <Form.Text className="text-muted">Кого поздравить</Form.Text>
+              {/* <Form.Text className="text-muted">Название уведомления</Form.Text> */}
             </Form.Group>
 
-            <Form.Group as={Col} controlId="bdDate">
-              <Form.Label>Дата</Form.Label>
+            {/* <Form.Group as={Col} controlId="bdDate">
+              <Form.Label>Дата, время уведомления:</Form.Label>
               <Form.Control required type="date" placeholder="01.02.1989" />
               <Form.Control.Feedback type="invalid">
                 Заполните поле
               </Form.Control.Feedback>
-              <Form.Text className="text-muted">Дата рождения</Form.Text>
+            </Form.Group> */}
+
+            <Form.Group as={Col} controlId="bdDate">
+              <Form.Label>Дата, время уведомления:</Form.Label>
+              <DatePicker
+                id="bdDateTime"
+                className="form-control"
+                locale="ru"
+                selected={startDate}
+                onChange={date => date && setStartDate(date)}
+                showTimeSelect
+                // timeFormat="HH:mm"
+                // dateFormat="mm dd, yyyy h:mm aa"
+                dateFormat="Pp"
+              />
+            </Form.Group>
+
+          </Form.Row>
+          
+          <Form.Row>
+            <Form.Group as={Col} controlId="bdPeriod">
+              <Form.Label>Периодичность уведомления:</Form.Label>
+              <Form.Control as="select" defaultValue={DEFAULTPERIOD}> 
+                {periodArr.map((period: string)=> periodSelectField(period))}
+              </Form.Control> 
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="bdTmz">
+              <Form.Label>Часовой пояс:</Form.Label>
+              <Form.Control as="select" defaultValue={TIMEZONE}> 
+                {tmzArr.map((tmzObj: any)=> tmzSelectField(tmzObj))}
+              </Form.Control> 
             </Form.Group>
           </Form.Row>
+
           <Form.Group controlId="bdComm">
-            <Form.Label>Комментарий</Form.Label>
+            <Form.Label>Подробности по уведомлению:</Form.Label>
             <Form.Control as="textarea" rows={3} />
           </Form.Group>
+
           {/* <Button type="submit" variant="success" size="lg" block>Добавить</Button> */}
           <Button id="buttonAdd" type="submit" variant="light" size="lg" block>
             Добавить

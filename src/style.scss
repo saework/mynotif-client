@@ -19,7 +19,14 @@
   display: flex;
   justify-content: center;
 }
-
+.react-datepicker__input-container {
+   width: inherit;
+  display: inherit;
+}
+.react-datepicker-wrapper {
+   width: 100%;
+  display: block;
+}
 
 .d1{
   width: 50px;
