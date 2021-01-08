@@ -23,10 +23,13 @@ function MainInfo(props) {
     // console.log(bdRow);
     $("#buttonAdd").html("Редактировать");
     if (bdRow) {
-      const bdDate = moment(bdRow.bdDate).format("YYYY-MM-DD");
+      //const bdDate = moment(bdRow.bdDate).format("YYYY-MM-DD");
+      const bdDate = bdRow.bdDate;
       $("#persName").val(bdRow.persName);
       $("#bdDate").val(bdDate);
       $("#bdComm").val(bdRow.bdComm);
+      $("#bdTmz").val(bdRow.bdTmz);
+      $("#bdPeriod").val(bdRow.bdPeriod);
     }
   };
 
@@ -50,7 +53,7 @@ function MainInfo(props) {
                 <td>{bdRow.persName}</td>
                 <td>{bdRow.bdComm}</td>
                 <td>{bdRow.bdDate}</td>
-                <td>Ежегодно</td>
+                <td>{bdRow.bdPeriod}</td>
                 <td>
                   <div>
                     <Button

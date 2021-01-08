@@ -30,20 +30,27 @@ export const initialState : IRootReducer = {
       {
         id: 1,
         persName: "Иванов Иван Иванович",
-        bdDate: "01.02.1998",
+        bdDate: "08.01.2019, 11:10",
         bdComm: "Комментарий",
+        bdTmz: "Asia/Yekaterinburg",
+        bdPeriod: "Без повторов"
       },
       {
         id: 2,
         persName: "Сидоров Андрей Петрович",
-        bdDate: "03.12.1996",
+        bdDate: "08.01.2020, 19:12",
         bdComm: "Длинный комментарий",
+        bdTmz: "Asia/Yekaterinburg",
+        bdPeriod: "Ежедневно"
       },
       {
         id: 4,
         persName: "Петров Иван Васильевич",
-        bdDate: "12.04.1986",
+        bdDate: "08.01.2021, 9:00",
         bdComm: "Очень длинный комментарий",
+        bdTmz: "Asia/Yekaterinburg",
+        bdPeriod: "Ежегодно"
+        
       },
     ],
  // },
@@ -85,6 +92,8 @@ switch (action.type) {
               persName: editBdRow.persName,
               bdDate: editBdRow.bdDate,
               bdComm: editBdRow.bdComm,
+              bdTmz: editBdRow.bdTmz,
+              bdPeriod: editBdRow.bdPeriod,
             };
           }
           return bdRow; // в map возвращаем новый собранный bdRow

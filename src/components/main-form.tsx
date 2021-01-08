@@ -19,9 +19,9 @@ registerLocale('ru', ru)
 
 // import { store } from "../store/store";
 // import { extendWith } from "lodash";
-const TIMEZONE = "Asia/Yekaterinburg";
-const DEFAULTPERIOD = "Без повторов";
-const periodArr =["Без повторов",  "Ежедневно", "Еженедельно", "ПН-ПТ", "Ежемесячно", "Ежегодно"];
+const TIMEZONE: string = "Asia/Yekaterinburg";
+const DEFAULTPERIOD: string = "Без повторов";
+const periodArr: string[] = ["Без повторов",  "Ежедневно", "Еженедельно", "ПН-ПТ", "Ежемесячно", "Ежегодно"];
 //const TIMEZONE = "Europe/Moscow";
 
 const timeZones = momenttz.tz.names();
@@ -71,7 +71,9 @@ function MainForm(props: IProps) {
       const bdDateVal:string = $("#bdDateTime").val() as string;
       const bdCommVal:string = $("#bdComm").val() as string;
       const bdTmzVal:string = $("#bdTmz").val() as string;
-      console.log(bdDateVal);
+      const bdPeriodVal:string = $("#bdPeriod").val() as string;
+      
+      //console.log(bdDateVal);
 
       if (buttonAdd === "Добавить") {
         const newbdRow: IBdRow = {
@@ -79,16 +81,20 @@ function MainForm(props: IProps) {
           persName: persNameVal,
           bdDate: bdDateVal,
           bdComm: bdCommVal,
+          bdTmz: bdTmzVal,
+          bdPeriod: bdPeriodVal,
         };
         props.addBdRow(newbdRow);
       }
       if (buttonAdd === "Редактировать") {
-        const bdDate = moment(bdDateVal).format("DD.MM.YYYY");
+        //const bdDate = moment(bdDateVal).format("DD.MM.YYYY");
         const newbdRow = {
           id: props.checkedId,
           persName: persNameVal,
-          bdDate,
+          bdDate: bdDateVal,
           bdComm: bdCommVal,
+          bdTmz: bdTmzVal,
+          bdPeriod: bdPeriodVal
         };
         // console.log(newbdRow);
         props.editBdRow(newbdRow);
@@ -97,6 +103,7 @@ function MainForm(props: IProps) {
         $("#persName").val("");
         $("#bdDate").val("");
         $("#bdComm").val("");
+        // $("#bdPeriod").val("");
       }
     }
   };

@@ -2,7 +2,9 @@ export interface IBdRow {
   id: number,
   persName: string,
   bdDate: string,
-  bdComm: string
+  bdComm: string,
+  bdTmz: string,
+  bdPeriod: string
   }
 export interface IBdRows {
   bdRows: IBdRow[]
