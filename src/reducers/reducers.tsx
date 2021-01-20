@@ -1,60 +1,71 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
-import { IAction, IRootReducer, IBdRow, TActionPayload } from "../interfaces";
+import { IAction, IRootReducer, IBdRow, TActionPayload, IJwtData } from "../interfaces";
 
 
 // export const initialState : IRootReducer = {
-//   router: {
-//     location: {},
-//     action: "POP",
-//   },
-//   rootReducer: {
-//     currUserEmail: "test@test",
+//     //currentUser: '',
+//     currentUser: 'test@test',
 //     currentId: 0,
 //     checkedId: 0,
+//     jwtToken: {jwt: "sfsfsd"},
+//     //jwtToken: {},
 //     bdRows: [],
-//   },
 // };
 
 export const initialState : IRootReducer = {
- // export const initialState = {
   // router: {
   //   location: {},
   //   action: "POP",
   // },
   // rootReducer: {
-    currentUser: "test@test",
-    currentId: 4,
+    currentUser: '',
+    currentId: 0,
     checkedId: 0,
-    bdRows: [
-      {
-        id: 1,
-        persName: "Иванов Иван Иванович",
-        bdDate: "08.01.2019, 11:10",
-        bdComm: "Комментарий",
-        bdTmz: "Asia/Yekaterinburg",
-        bdPeriod: "Без повторов"
-      },
-      {
-        id: 2,
-        persName: "Сидоров Андрей Петрович",
-        bdDate: "08.01.2020, 19:12",
-        bdComm: "Длинный комментарий",
-        bdTmz: "Asia/Yekaterinburg",
-        bdPeriod: "Ежедневно"
-      },
-      {
-        id: 4,
-        persName: "Петров Иван Васильевич",
-        bdDate: "08.01.2021, 9:00",
-        bdComm: "Очень длинный комментарий",
-        bdTmz: "Asia/Yekaterinburg",
-        bdPeriod: "Ежегодно"
-        
-      },
-    ],
- // },
+    jwtToken: {},
+    bdRows: [],
+//  },
 };
+
+// export const initialState : IRootReducer = {
+//  // export const initialState = {
+//   // router: {
+//   //   location: {},
+//   //   action: "POP",
+//   // },
+//   // rootReducer: {
+//     currentUser: "test@test",
+//     currentId: 4,
+//     checkedId: 0,
+//     bdRows: [
+//       {
+//         id: 1,
+//         persName: "Иванов Иван Иванович",
+//         bdDate: "13.01.2021, 23:09",
+//         bdComm: "Комментарий",
+//         bdTmz: "Asia/Yekaterinburg",
+//         bdPeriod: "Без повторов"
+//       },
+//       {
+//         id: 2,
+//         persName: "Сидоров Андрей Петрович",
+//         bdDate: "10.01.2021, 20:27",
+//         bdComm: "Длинный комментарий",
+//         bdTmz: "Asia/Yekaterinburg",
+//         bdPeriod: "Ежедневно"
+//       },
+//       {
+//         id: 4,
+//         persName: "Петров Иван Васильевич",
+//         bdDate: "13.01.2021, 23:08",
+//         bdComm: "Очень длинный комментарий",
+//         bdTmz: "Asia/Yekaterinburg",
+//         bdPeriod: "Ежегодно"
+        
+//       },
+//     ],
+//  // },
+// };
 
 export function rootReducer(state : IRootReducer = initialState , action: IAction) {
 const payload: TActionPayload = action.payload;
@@ -102,6 +113,12 @@ switch (action.type) {
     }
     case "LOAD_BD": {
       return action.payload;
+    }
+    case "LOGIN_SAVE_STORE": {
+      const jwtData: IJwtData = action.payload as IJwtData;
+
+      console.log(jwtData);
+      return { ...state, currentUser: jwtData.email, jwtToken: jwtData.jwtToken };
     }
     default:
       return state;

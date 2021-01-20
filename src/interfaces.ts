@@ -13,6 +13,7 @@ export interface IRootReducer {
   currentUser: string,
   currentId: number,
   checkedId: number,
+  jwtToken: {},
   bdRows: IBdRow[]
 }
 export interface IRouter {
@@ -23,7 +24,11 @@ export interface IStore {
   router: IRouter,
   rootReducer: IRootReducer
 }
-export type TActionPayload = number | IBdRow | IBdRows;
+export interface IJwtData {
+  email: string,
+  jwtToken: {}
+}
+export type TActionPayload = number | IBdRow | IBdRows | IJwtData;
 export interface IAction {
   type: string,
   payload: TActionPayload 
@@ -32,4 +37,6 @@ export interface ItmzObj {
   timeZoneValue: string,
   timeZoneText: string
 }
+
+
 

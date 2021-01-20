@@ -35,3 +35,9 @@ export function loadBD(bd:IRootReducer): IAction {
     payload: bd,
   };
 }
+export function loginSaveStore(loginData:IRootReducer): IAction {
+  return {
+    type: "LOGIN_SAVE_STORE",
+    payload: loginData,
+  };
+}

@@ -12,15 +12,19 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import axios from "axios";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { history, store } from "../store/store";
+import { loginSaveStore } from "../actions/actions";
+import { connect } from "react-redux";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>
-      {" "}
+      {"Сервис «Мои уведомления» © "}
+      {/* <Link color="inherit" href="https://material-ui.com/">
+        Сервис Мои уведомления
+      </Link>{' '} */}
       {new Date().getFullYear()}
       .
     </Typography>
@@ -47,8 +51,55 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+
+//export default function SignIn() {
+function SignIn(props) {
   const classes = useStyles();
+
+    // войти по логину и паролю
+  let signInHandler = ()=> {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    // const loginData = {
+    //   email: email,
+    //   password: password
+    // }  
+    // console.log(loginData);
+    const url = "http://localhost:3000/login";
+    //const url = "/login";
+      axios
+        .post(url, {
+          // loginData,
+          //user:"test@test"
+          username: email, password: password
+        })
+        .then((response) => {
+          let bd;
+          if (response.statusText === "OK") {
+            console.log(response);
+            const jwt = response.data;
+            console.log(jwt);
+           // props.loginSaveStore(jwtData);
+            localStorage.setItem("jwt", JSON.stringify(jwt));
+            console.log("Аутентификация прошла успешно, JWT записан в LocalStorage")
+            bd = true;
+          }
+          return bd;
+        })
+        .then((db) => {
+          if (db) {
+            console.log("Переход на главную страницу после аутентификации");
+            history.push({
+              pathname: '/home',
+              state: { needLoadData: true }
+            })
+          }
+        })
+        .catch((error) => {
+          console.log(`Ошибка соединения:${error}`);
+        });
+    }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -58,7 +109,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar> */}
         <Typography component="h1" variant="h5">
-          Sign in
+          Вход
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -67,7 +118,7 @@ export default function SignIn() {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Email адрес"
             name="email"
             autoComplete="email"
             autoFocus
@@ -78,32 +129,33 @@ export default function SignIn() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Пароль"
             type="password"
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
-            type="submit"
+            type="button"
             fullWidth
             variant="contained"
             className={classes.submit}
+            onClick={signInHandler}
           >
-            Sign In
+            Войти
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
+              <Link href="/newpassword" variant="body2">
+                Забыли пароль?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                Don't have an account? Sign Up
+              <Link href="/signup" variant="body2">
+                Нет аккаунта? Регистрация
               </Link>
             </Grid>
           </Grid>
@@ -115,3 +167,12 @@ export default function SignIn() {
     </Container>
   );
 }
+
+const mapStateToProps = (store) => ({
+
+});
+const mapDispatchToProps = (dispatch) => ({
+  //loginSaveStore: (loginData) => dispatch(loginSaveStore(loginData)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
