@@ -7,7 +7,12 @@
 @import 'main';
 @import "~bootstrap/scss/bootstrap";
 
+.sign-up__reqMessage-label{
+  margin: 0px auto 5px auto;
+  font-size: 18px;
+  color:darkred;
 
+}
 
 .main-page__bd-info{
  // background-color: yellow;
