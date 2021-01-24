@@ -16,6 +16,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { history, store } from "../store/store";
+import { validateEmail } from "../functions";
+import { loginSaveStore } from "../actions/actions";
+import { connect } from "react-redux";
+
 
 function Copyright() {
   return (
@@ -50,15 +54,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+function SignUp(props) {
   const classes = useStyles();
 
   const [reqMessage, setReqMessage] = useState("");
 
-  let validateEmail=(email)=>{
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
+  // let validateEmail=(email)=>{
+  //   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  //   return re.test(String(email).toLowerCase());
+  // }
 
    // войти по логину и паролю
   let signUpHandler = ()=> {
@@ -66,7 +70,7 @@ export default function SignUp() {
     const password = document.getElementById('password').value;
     const passwordRpt = document.getElementById('passwordRpt').value;
 
-    console.log(validateEmail(email))
+    //console.log(validateEmail(email))
 
     if (email && password && passwordRpt){
       if (password===passwordRpt){
@@ -97,8 +101,14 @@ export default function SignUp() {
                   const jwt = response.data;
                   console.log(jwt);
                 // props.loginSaveStore(jwtData);
-                  localStorage.setItem("jwt", JSON.stringify(jwt));
-                  console.log("Регистрация прошла успешно, JWT записан в LocalStorage");
+                  const loginData = {
+                    currentUser: email,
+                    jwtToken: jwt.jwtToken
+                  } 
+                  props.loginSaveStore(loginData);
+                  //localStorage.setItem("jwt", JSON.stringify(jwt));
+                  localStorage.setItem("loginData", JSON.stringify(loginData));
+                  console.log("Регистрация прошла успешно, loginData записан в LocalStorage");
                   bd = true;
                 }else{
                   bd = null;
@@ -127,6 +137,7 @@ export default function SignUp() {
           })
           .catch((error) => {
             console.log(`Ошибка соединения:${error}`);
+            setReqMessage("Ошибка соединения");
           });
         }else{
           const mes = "Email имеет не верный формат!";
@@ -209,9 +220,10 @@ export default function SignUp() {
           <label className="sign-up__reqMessage-label">{reqMessage}</label>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              {/* <Link href="/login" variant="body2">
                 Уже есть аккаунт? Войти
-              </Link>
+              </Link> */}
+              <Link to="/login">Уже есть аккаунт? Войти</Link>
             </Grid>
           </Grid>
         </form>
@@ -223,3 +235,12 @@ export default function SignUp() {
     </Container>
   );
 }
+
+const mapStateToProps = (store) => ({
+
+});
+const mapDispatchToProps = (dispatch) => ({
+  loginSaveStore: (loginData) => dispatch(loginSaveStore(loginData)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

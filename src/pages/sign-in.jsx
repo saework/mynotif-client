@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 // import Avatar from '@material-ui/core/Avatar';
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,6 +17,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { history, store } from "../store/store";
 import { loginSaveStore } from "../actions/actions";
 import { connect } from "react-redux";
+import { validateEmail } from "../functions";
 
 function Copyright() {
   return (
@@ -56,48 +57,80 @@ const useStyles = makeStyles((theme) => ({
 function SignIn(props) {
   const classes = useStyles();
 
+  const [reqMessage, setReqMessage] = useState("");
+
     // войти по логину и паролю
   let signInHandler = ()=> {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    // const loginData = {
-    //   email: email,
-    //   password: password
-    // }  
-    // console.log(loginData);
-    const url = "http://localhost:3000/login";
-    //const url = "/login";
-      axios
-        .post(url, {
-          // loginData,
-          //user:"test@test"
-          username: email, password: password
-        })
-        .then((response) => {
-          let bd;
-          if (response.statusText === "OK") {
-            console.log(response);
-            const jwt = response.data;
-            console.log(jwt);
-           // props.loginSaveStore(jwtData);
-            localStorage.setItem("jwt", JSON.stringify(jwt));
-            console.log("Аутентификация прошла успешно, JWT записан в LocalStorage")
-            bd = true;
-          }
-          return bd;
-        })
-        .then((db) => {
-          if (db) {
-            console.log("Переход на главную страницу после аутентификации");
-            history.push({
-              pathname: '/home',
-              state: { needLoadData: true }
-            })
-          }
-        })
-        .catch((error) => {
-          console.log(`Ошибка соединения:${error}`);
-        });
+    if (email, password){
+      const validEmail = validateEmail(email);
+      if (validEmail===true){
+      // const loginData = {
+      //   email: email,
+      //   password: password
+      // }  
+      // console.log(loginData);
+        const url = "http://localhost:3000/login";
+        //const url = "/login";
+        axios
+          .post(url, {
+            // loginData,
+            //user:"test@test"
+            username: email, password: password
+          })
+          .then((response) => {
+            let bd;
+            if (response.statusText === "OK") {
+              console.log(response);
+              const jwt = response.data;
+              console.log(jwt);
+              const loginData = {
+                currentUser: email,
+                jwtToken: jwt.jwtToken
+              } 
+              props.loginSaveStore(loginData);
+              //localStorage.setItem("jwt", JSON.stringify(jwt));
+              localStorage.setItem("loginData", JSON.stringify(loginData));
+              console.log("Аутентификация прошла успешно, loginData записан в LocalStorage")
+              bd = true;
+            }else{
+              const mes = "Ошибка сервера";
+              setReqMessage(mes);
+              bd = false;
+            }
+            return bd;
+          })
+          .then((db) => {
+            if (db) {
+              console.log("Переход на главную страницу после аутентификации");
+              history.push({
+                pathname: '/home',
+                state: { needLoadData: true }
+              })
+            }
+          })
+          .catch((error) => {
+            if (error.response){
+              if (error.response.status === 401){
+                  setReqMessage("Не верный логин или пароль!");
+              }else{
+                console.log(`Ошибка соединения:${error}`);
+                setReqMessage("Ошибка сервера");
+              }
+            }else{
+              console.log(`Ошибка сервера:${error}`);
+              setReqMessage("Ошибка сервера");
+            }
+          });
+        }else{
+          const mes = "Email имеет не верный формат!";
+          setReqMessage(mes);
+        }
+      }else{
+        const mes = "Заполните обязательные поля!";
+        setReqMessage(mes);
+      } 
     }
 
 
@@ -147,6 +180,7 @@ function SignIn(props) {
           >
             Войти
           </Button>
+          <label className="sign-up__reqMessage-label">{reqMessage}</label>
           <Grid container>
             <Grid item xs>
               <Link href="/newpassword" variant="body2">
@@ -161,7 +195,7 @@ function SignIn(props) {
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
+      <Box mt={3}>
         <Copyright />
       </Box>
     </Container>
@@ -172,7 +206,7 @@ const mapStateToProps = (store) => ({
 
 });
 const mapDispatchToProps = (dispatch) => ({
-  //loginSaveStore: (loginData) => dispatch(loginSaveStore(loginData)),
+  loginSaveStore: (loginData) => dispatch(loginSaveStore(loginData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

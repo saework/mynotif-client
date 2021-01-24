@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Alert } from "react-bootstrap";
+import { Container, Alert, Row, Col, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -10,7 +10,7 @@ import MainInfo from "../components/main-info";
 import MainForm from "../components/main-form";
 import "../style.scss";
 import { store, history } from "../store/store";
-import { loadBD } from "../actions/actions";
+import { loadBD, loginSaveStore } from "../actions/actions";
 
 import moment from "moment";
 
@@ -28,7 +28,7 @@ import moment from "moment";
 class MainPage extends React.Component {
   constructor() {
     super();
-    this.state = { loading: false };
+    this.state = { loading: "" };
     this.myRef = React.createRef();
   }
 
@@ -41,33 +41,74 @@ class MainPage extends React.Component {
         this.handlerLoadFromServer();
       }
     }
+    
   }
 
-  authHeader = () => {
-    const jwt = JSON.parse(localStorage.getItem('jwt'));
-  
-    // if (jwt && jwt.accessToken) {
-    //   return { Authorization: 'Bearer ' + jwt.accessToken };
-    // } else {
-    //   return {};
-    // }
-
-    if (jwt) {
-      return { Authorization: 'Bearer ' + jwt };
-    } else {
-      return {};
+  getLoginData=(dataType)=>{
+    const loginData = JSON.parse(localStorage.getItem('loginData'));
+    let res = null;
+    if (loginData){
+      if (dataType==="currenUser"){
+        res = loginData.currenUser;
+      }
+      if (dataType==="jwtToken"){
+        res = loginData.jwtToken;
+      }
+      if (dataType==="jwtAuthHeader"){
+        const jwtToken = loginData.jwtToken
+        console.log(loginData)
+        if (jwtToken){
+          res = { Authorization:`bearer ${jwtToken}`};
+        }
+      }
     }
+    console.log("getLoginData res: "+ res);
+    return res;
   }
 
-  logOut = () => {
-    localStorage.removeItem("user");
-  }
+  // authHeader = () => {
+  //   const loginData = JSON.parse(localStorage.getItem('loginData'));
+  //   let res = {};
+  //   if (loginData){
+  //     const jwt = loginData.jwt
+  //     if (jwt) {
+  //       res = { Authorization: 'Bearer ' + jwt };
+  //     }
+  //   }
+  //   return res;
+  // }
 
-  handlerLoading = () =>
+  handlerLoading = () =>{
     // eslint-disable-next-line react/destructuring-assignment
-    (this.state.loading === true ? "Загрузка данных.." : "");
+   // (this.state.loading === true ? "Загрузка данных.." : "");
+   if (this.state.loading === ""){
+     return ""
+   }
+   if (this.state.loading === "load"){
+    return "Загрузка данных.."
+   }
+   if (this.state.loading === "save"){
+    return "Сохранение данных.."
+   }
+  }
 
-  // взаимодействие с сервером
+  handleExitButtonClick = () => {
+    //e.preventDefault();
+    //localStorage.setItem("jwt", JSON.stringify(jwt));
+    //localStorage.removeItem("jwt");
+    localStorage.removeItem("loginData");
+    history.push({
+      pathname: '/login'
+    })
+    const loginData={
+      currentUser: '',
+      jwtToken: ''
+
+    }
+    this.props.loginSaveStore(loginData);
+  }
+ 
+  // Сохранить список на сервер
   handlerSaveToServer = () => {
     const bdRows = store.getState().rootReducer;
     const currUserEmail = store.getState().rootReducer.currentUser;
@@ -84,33 +125,33 @@ class MainPage extends React.Component {
 
 
 
-  // запустить задачи
-  handlerStartCronTasksOnServer = () => {
-    const data = "startCronTasks";
-    this.sendBDtoServer(data);
-    // console.log(data);
-    //console.log(repeatMap.norep);
+  // // запустить задачи
+  // handlerStartCronTasksOnServer = () => {
+  //   const data = "startCronTasks";
+  //   this.sendBDtoServer(data);
+  //   // console.log(data);
+  //   //console.log(repeatMap.norep);
     
 
-    // const currDate = new Date();
-    // const currMonth = Number(currDate.getMonth());
-    // console.log(currDate);
-    // console.log(currDate.getMonth());
-    // console.log(currMonth);
-    //const currDate = new Date();
-    // const currDate = "11.01.2021";
-    //  console.log(new Date().getDay());
-    //  console.log(Number("1"));
-    // console.log(moment(currDate, "DD.MM.YYYY").day());
-   // console.log(moment(currDate, "DD.MM.YYYY").date());
+  //   // const currDate = new Date();
+  //   // const currMonth = Number(currDate.getMonth());
+  //   // console.log(currDate);
+  //   // console.log(currDate.getMonth());
+  //   // console.log(currMonth);
+  //   //const currDate = new Date();
+  //   // const currDate = "11.01.2021";
+  //   //  console.log(new Date().getDay());
+  //   //  console.log(Number("1"));
+  //   // console.log(moment(currDate, "DD.MM.YYYY").day());
+  //  // console.log(moment(currDate, "DD.MM.YYYY").date());
 
-  };
-  // остановить задачи
-  handlerStopCronTasksOnServer = () => {
-    const data = "stopCronTasks";
-    // console.log(data);
-    this.sendBDtoServer(data);
-  };
+  // };
+  // // остановить задачи
+  // handlerStopCronTasksOnServer = () => {
+  //   const data = "stopCronTasks";
+  //   // console.log(data);
+  //   this.sendBDtoServer(data);
+  // };
 
   handlerLoadFromServer = () => {
     const currUserEmail = store.getState().rootReducer.currentUser;
@@ -120,6 +161,7 @@ class MainPage extends React.Component {
 
   // отправить данные в БД POST-запрос
   sendBDtoServer(data) {
+    this.setState({ loading: "save" });
     const url = "http://localhost:3000/home";
     // const url = "/home";
     axios
@@ -130,53 +172,39 @@ class MainPage extends React.Component {
         if (response.statusText === "OK") {
           const res = response.data;
           console.log(res);
+          setTimeout(() => {   ///!!! убрать !!!
+            console.log("ожидание..");
+            this.setState({ loading: "" });
+          }, 2000);
         }
       })
       .catch((error) => {
+        this.setState({ loading: "" });
         console.log(`Ошибка соединения:${error}`);
       });
   }
 
   // получить данные из БД через GET-запрос
   loadBDfromServer(currUserEmail) {
-    this.setState({ loading: true });
+    this.setState({ loading: "load" });
     const url = "http://localhost:3000/load";
     // const url = "/load?currUserEmail=" + currUserEmail;
     //const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdEB0ZXN0IiwiaWF0IjoxNjExMTMxMjYwfQ.i3s6T950gGaERqmvTPFOFPIA5XS3HBdxFJ4mEPt9Ahk"
     //const jwtToken = this.authHeader()
     //const jwtToken= JSON.parse(localStorage.getItem('jwt').token);
-    const jwtToken= JSON.parse(localStorage.getItem('jwt'));
-    console.log(jwtToken);
-    let config = {
-      headers: {
-        Authorization:`bearer ${jwtToken.token}`
-        // accept: '*/*',
-        // host: 'localhost:3000',
+    //const jwtToken= JSON.parse(localStorage.getItem('jwt'));
+    const jwtAuthHeader =  this.getLoginData("jwtAuthHeader")
+    if (jwtAuthHeader){
+      console.log(jwtAuthHeader);
+      let config = {
+        headers: {
+          Authorization:`bearer ${jwtAuthHeader}`
+          // accept: '*/*',
+          // host: 'localhost:3000',
+        }
       }
-    }
-    let data = {aaa:"!!!"};
-    axios
-      //.get(url, {
-        .post(url,  data, config)    
-      //      {     
-      //     //  headers: {Authorization:`bearer ${jwtToken.token}`}
-
-      //     //   headers: { 
-      //     //     authorization: `Bearer ${jwtToken.token}`,
-      //     //     accept: '*/*',
-      //     //     host: 'localhost:3000',
-      //     // },
-          
-      //       //     headers: {
-      //     //     'authorization': jwtToken.token,
-      //     //     'Accept' : 'application/json',
-      //     //     'Content-Type': 'application/json'
-      //     // }
-      //    //   headers: {"Authorization" : `Bearer ${jwtToken.token}`}
-         
-      //       //headers: this.authHeader(), 
-      //       //params: {currUserEmail},
-      // })
+      let data = {currUserEmail: currUserEmail};
+      axios.post(url,  data, config)    
       .then((response) => {
         // console.log(response)
         let bd;
@@ -193,13 +221,18 @@ class MainPage extends React.Component {
         setTimeout(() => {   ///!!! убрать !!!
           console.log("ожидание..");
           store.dispatch(loadBD(bd));
-          this.setState({ loading: false });
-        }, 3000);
+          this.setState({ loading: "" });
+        }, 2000);
       })
       .catch((error) => {
         console.log(`Ошибка соединения:${error}`);
-        this.setState({ loading: false });
+        this.setState({ loading: "" });
       });
+    }else{
+      history.push({
+        pathname: '/login',
+      })
+    }
   }
 
   render() {
@@ -209,14 +242,14 @@ class MainPage extends React.Component {
         <Container>
           <MainInfo bdRows={bdRows} />
           <MainForm bdRows={bdRows} />
-          <div>
+          {/* <div>
             <Link to="/login">
               <button type="button">Войти</button>
             </Link>
             <Link to="/signup">
               <button type="button">Регистрация</button>
             </Link>
-          </div>
+          </div> */}
           <Alert
             className="message__alert_center"
             variant="light"
@@ -224,10 +257,29 @@ class MainPage extends React.Component {
           >
             {this.handlerLoading()}
           </Alert>
-          <button type="button" onClick={this.handlerSaveToServer}>SaveToServer</button>
+          {/* <button type="button" onClick={this.handlerSaveToServer}>SaveToServer</button>
           <button type="button" onClick={this.handlerLoadFromServer}>LoadFromServer</button>
           <button type="button" onClick={this.handlerStartCronTasksOnServer}>StartCronTasks</button>
-          <button type="button" onClick={this.handlerStopCronTasksOnServer}>StopCronTasks</button>
+          <button type="button" onClick={this.handlerStopCronTasksOnServer}>StopCronTasks</button> */}
+
+      <Row>
+        <Col>
+          <Button id="buttonSave" type="button" variant="light" size="lg" block onClick={this.handlerSaveToServer}>
+            Сохранить список
+          </Button>
+        </Col>
+        <Col>
+        <Button id="buttonCancel" type="button" variant="light" size="lg" block onClick={this.handlerLoadFromServer}>
+            Отменить изменения
+        </Button>
+        </Col>
+        <Col>
+        <Button id="buttonExit" type="button" variant="light" size="lg" block onClick={this.handleExitButtonClick}>
+            Выйти из аккаунта
+        </Button>
+        </Col>
+      </Row>
+
         </Container>
       </div>
     );
@@ -251,6 +303,7 @@ const mapDispatchToProps = (dispatch) => ({
   forw: () => {
     dispatch(goForward());
   },
+  loginSaveStore: (loginData) => dispatch(loginSaveStore(loginData)),
   // delBdRow: newbdRow=>dispatch(delBdRow(newbdRow)),
 });
 

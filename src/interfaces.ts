@@ -24,11 +24,11 @@ export interface IStore {
   router: IRouter,
   rootReducer: IRootReducer
 }
-export interface IJwtData {
-  email: string,
-  jwtToken: {}
+export interface ILoginData {
+  currentUser: string,
+  jwtToken: string
 }
-export type TActionPayload = number | IBdRow | IBdRows | IJwtData;
+export type TActionPayload = number | IBdRow | IBdRows | ILoginData;
 export interface IAction {
   type: string,
   payload: TActionPayload 

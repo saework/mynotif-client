@@ -22,6 +22,11 @@ function MainInfo(props) {
     const bdRow = getRowById(bdRowId);
     // console.log(bdRow);
     $("#buttonAdd").html("Редактировать");
+
+    //$('#persName').focus;
+    document.getElementById("persName").focus();
+    //getElementById("mytext").focus();
+
     if (bdRow) {
       //const bdDate = moment(bdRow.bdDate).format("YYYY-MM-DD");
       const bdDate = bdRow.bdDate;
@@ -46,7 +51,10 @@ function MainInfo(props) {
               <th>Период</th>
             </tr>
           </thead>
+
           <tbody>
+          {bdRows.length > 0 &&
+          <>
             {bdRows.map((bdRow, index) => (
               <tr key={bdRow.id}>
                 <td>{index + 1}</td>
@@ -75,8 +83,25 @@ function MainInfo(props) {
                   </div>
                 </td>
               </tr>
-            ))}
+            )
+            )}
+
+            </>}
+            {bdRows.length == 0 && 
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                <div className="main-page__bd-nodata">
+                  Список пуст
+                </div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>}
+
           </tbody>
+
         </Table>
       </Col>
     </Row>

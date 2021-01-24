@@ -13,9 +13,17 @@
   color:darkred;
 
 }
+.main-page__bd-nodata{
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  color:rgb(209, 209, 209);
+  margin: 10px 0 10px 0;
+}
 
 .main-page__bd-info{
  // background-color: yellow;
+ height: 50%;
 }
 .main-page__bd-form{
  // background-color: green;

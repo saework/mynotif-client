@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 // import Avatar from '@material-ui/core/Avatar';
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +12,8 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { validateEmail } from "../functions";
+import axios from "axios";
 
 function Copyright() {
   return (
@@ -52,6 +54,48 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
 
+  const [reqMessage, setReqMessage] = useState("");
+
+  let updatePasswordHandler = () => {
+    // const currUserEmail = store.getState().rootReducer.currentUser;
+    // console.log(currUserEmail);
+    // this.loadBDfromServer(currUserEmail);
+
+    const email = document.getElementById('email').value;
+    if (email){
+      const validEmail = validateEmail(email);
+      if (validEmail===true){
+          const url = "http://localhost:3000/newpassword";
+          const data = {currUserEmail: email};
+          // const url = "/newpassword";
+          axios
+            .post(url, {
+              data,
+            })
+            .then((response) => {
+              if (response.statusText === "OK") {
+                const res = response.data.result; 
+                console.log(res);
+                if (res==="ok"){
+                  setReqMessage(response.data.mes);
+                }else{
+                  setReqMessage("Ошибка сервера");
+                }
+              }
+            })
+            .catch((error) => {
+              console.log(`Ошибка соединения:${error}`);
+            });
+      }else{
+        const mes = "Email имеет не верный формат!";
+        setReqMessage(mes);
+      }
+    }else{
+      const mes = "Заполните поле Email!";
+      setReqMessage(mes);
+    } 
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -60,23 +104,37 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar> */}
         <Typography component="h1" variant="h6">
-          Новый пароль будет выслан на Ваш email адрес
+          {/* Новый пароль будет выслан на Ваш email адрес */}
+          Сброс пароля
         </Typography>
         <form className={classes.form} noValidate>
+        <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email адрес"
+                name="email"
+                autoComplete="email"
+              />
+            </Grid>
           <Button
-            type="submit"
+            type="button"
             fullWidth
             variant="contained"
             className={classes.submit}
+            onClick={updatePasswordHandler}
           >
             Сменить пароль
           </Button>
+          <label className="sign-up__reqMessage-label">{reqMessage}</label>
         {/* <Typography component="p" variant="p" className={classes.text}>
           Новый пароль будет выслан на Ваш email адрес
         </Typography> */}
           <Grid container>
             <Grid item xs>
-              <Link href="/home" variant="body2">
+              <Link href="/login" variant="body2">
                 На главную
               </Link>
             </Grid>

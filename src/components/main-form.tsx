@@ -15,6 +15,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { getCurrentId } from "../functions";
 import { addBdRow, editBdRow } from "../actions/actions";
 import { IAction, IRootReducer, IBdRows, IBdRow, IStore, ItmzObj } from "../interfaces";
+import { history } from "../store/store";
 registerLocale('ru', ru)
 
 // import { store } from "../store/store";
@@ -57,6 +58,23 @@ function MainForm(props: IProps) {
       <option value={period}>{period}</option>
     )
   }
+
+  // const handleSaveButtonClick = (e: React.SyntheticEvent) => {
+  //   //e.preventDefault();
+  
+  // }
+  // const handleCancelButtonClick = (e: React.SyntheticEvent) => {
+  //   //e.preventDefault();
+  
+  // }
+  // const handleExitButtonClick = (e: React.SyntheticEvent) => {
+  //   //e.preventDefault();
+  //   //localStorage.setItem("jwt", JSON.stringify(jwt));
+  //   localStorage.removeItem("jwt");
+  //   history.push({
+  //     pathname: '/login'
+  //   })
+  // }
   
 
   const handleAddButtonClick = (e: React.SyntheticEvent) => {
@@ -85,6 +103,14 @@ function MainForm(props: IProps) {
           bdPeriod: bdPeriodVal,
         };
         props.addBdRow(newbdRow);
+        //document.getElementById("persName").focus();
+        const inputPersName = document.getElementById("persName");
+        //const inputPersName = document.getElementById("buttonAdd");
+        
+        if (inputPersName){
+          inputPersName.focus();
+        }
+        //: HTMLElement
       }
       if (buttonAdd === "Редактировать") {
         //const bdDate = moment(bdDateVal).format("DD.MM.YYYY");
@@ -172,6 +198,35 @@ function MainForm(props: IProps) {
             Добавить
           </Button>
         </Form>
+
+
+        {/* <Row>
+        <Button id="buttonSave" type="button" variant="light" size="lg" block>
+          Сохранить
+        </Button>
+        <Button id="buttonCancel" type="button" variant="light" size="lg" block>
+           Отмена
+        </Button>
+        </Row> */}
+
+      {/* <Row>
+        <Col>
+          <Button id="buttonSave" type="button" variant="light" size="lg" block onClick={handleSaveButtonClick}>
+            Сохранить список
+          </Button>
+        </Col>
+        <Col>
+        <Button id="buttonCancel" type="button" variant="light" size="lg" block onClick={handleCancelButtonClick}>
+            Отменить изменения
+        </Button>
+        </Col>
+        <Col>
+        <Button id="buttonExit" type="button" variant="light" size="lg" block onClick={handleExitButtonClick}>
+            Выйти из аккаунта
+        </Button>
+        </Col>
+      </Row> */}
+
       </Col>
     </Row>
   );

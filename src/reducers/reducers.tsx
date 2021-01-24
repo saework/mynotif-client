@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
-import { IAction, IRootReducer, IBdRow, TActionPayload, IJwtData } from "../interfaces";
+import { IAction, IRootReducer, IBdRow, TActionPayload, ILoginData } from "../interfaces";
 
 
 // export const initialState : IRootReducer = {
@@ -22,7 +22,7 @@ export const initialState : IRootReducer = {
     currentUser: '',
     currentId: 0,
     checkedId: 0,
-    jwtToken: {},
+    jwtToken: '',
     bdRows: [],
 //  },
 };
@@ -115,10 +115,10 @@ switch (action.type) {
       return action.payload;
     }
     case "LOGIN_SAVE_STORE": {
-      const jwtData: IJwtData = action.payload as IJwtData;
+      const loginData: ILoginData = action.payload as ILoginData;
 
-      console.log(jwtData);
-      return { ...state, currentUser: jwtData.email, jwtToken: jwtData.jwtToken };
+      console.log(loginData);
+      return { ...state, currentUser: loginData.currentUser, jwtToken: loginData.jwtToken };
     }
     default:
       return state;
