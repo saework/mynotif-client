@@ -44,11 +44,13 @@ function MainInfo(props) {
         <Table>
           <thead>
             <tr>
-              <th>№</th>
-              <th>Название</th>
-              <th>Подробности</th>
-              <th>Дата, время</th>
-              <th>Период</th>
+              <th sm={2} className="main-info__th-num">№</th>
+              <th className="main-info__th-name">Название</th>
+              <th sm={8} className="main-info__th-text">Подробности</th>
+              <th className="main-info__th-date">Дата, время</th>
+              <th className="main-info__th-period">Период</th>
+              <th className="main-info__th-edit"></th>
+              <th className="main-info__th-edit"></th>
             </tr>
           </thead>
 
@@ -62,24 +64,24 @@ function MainInfo(props) {
                 <td>{bdRow.bdComm}</td>
                 <td>{bdRow.bdDate}</td>
                 <td>{bdRow.bdPeriod}</td>
-                <td>
+                <td className="main-info__td-edit">
                   <div>
-                    <Button
+                    {/* <Button
                       variant="light"
-                      onClick={() => handleEditButtonClick(bdRow.id)}
-                    >
+                      onClick={() => handleEditButtonClick(bdRow.id)}>
                       Р
-                    </Button>
+                    </Button> */}
+                    <img className="main-info__edit" src="images/edit.svg" onClick={() => handleEditButtonClick(bdRow.id)}></img>
                   </div>
                 </td>
-                <td>
+                <td className="main-info__td-edit">
                   <div>
-                    <Button
+                    {/* <Button
                       variant="light"
-                      onClick={() => handleDelButtonClick(bdRow.id)}
-                    >
+                      onClick={() => handleDelButtonClick(bdRow.id)}>
                       У
-                    </Button>
+                    </Button> */}
+                    <img className="main-info__edit" src="images/trash.svg" onClick={() => handleDelButtonClick(bdRow.id)}></img>
                   </div>
                 </td>
               </tr>

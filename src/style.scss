@@ -23,11 +23,49 @@
 
 .main-page__bd-info{
  // background-color: yellow;
- height: 50%;
+ //height: 50%;
 }
+.main-info__edit{
+  width: 30px;
+  height: 30px;
+}
+.main-info__edit:hover{
+  cursor: pointer;
+}
+.main-info__edit:active{
+   width: 28px;
+   height: 28px;
+  cursor: pointer;
+}
+// td.main-info__td-edit{
+//   width: 30px;
+//   height: 30px;
+//   margin: 0 5px 0 5px;
+// }
+th.main-info__th-edit{
+  width: 50px;
+  height: 50px;
+  // margin: 0 5px 0 5px;
+}
+
 .main-page__bd-form{
  // background-color: green;
 }
+// .main-info__th-num{
+//   max-width: 65px;
+//  }
+//  .main-info__th-name{
+//   max-width: 250px;
+//  }
+//  .main-info__th-text{
+//   max-width: 250px;
+//  }
+// <th className="main-info__th-num">№</th>
+// <th className="main-info__th-name">Название</th>
+// <th className="main-info__th-text">Подробности</th>
+// <th className="main-info__th-date">Дата, время</th>
+// <th className="main-info__th-period">Период</th>
+
 .message__alert_center{
   display: flex;
   justify-content: center;

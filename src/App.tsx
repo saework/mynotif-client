@@ -3,10 +3,10 @@
 import React from "react";
 import "./style.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
-import MainPage from "./pages/main-page";
+import MainPage from "./pages/home";
 import SignIn from "./pages/sign-in";
 import SignUp from "./pages/sign-up";
-import NewPass from "./pages/new-password";
+import NewPass from "./pages/new-pass";
 import { history, store } from "./store/store";
 import _ from "lodash";
 
