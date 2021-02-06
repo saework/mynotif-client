@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Row, Col, Form, Button
 } from "react-bootstrap";
@@ -43,10 +43,25 @@ interface IProps {
 
 function MainForm(props: IProps) {
   // const bdRows = props.bdRows;
+  const [buttonAddName, setButtonAddName] = useState("Добавить");
+ // const [persNameInpVal, setpersNameInpVal] = useState("");
   const [validated, setValidated] = useState(false);
+  //const [datePick, setdatePick] = useState("");
   const [startDate, setStartDate] = useState<any>(
     setHours(setMinutes(new Date(), 0), 9)
   );
+
+  // persName
+  // bdDate
+  // bdComm
+
+  //const persNameRef = useRef();  ///!!!  
+  const buttonAddRef = useRef<HTMLButtonElement>(null);
+  const persNameRef = useRef<HTMLInputElement>(null);
+  const bdDateValRef = useRef<any>(null);
+  const bdCommValRef = useRef<HTMLTextAreaElement>(null);
+  const bdTmzValRef = useRef<HTMLSelectElement>(null);
+  const bdPeriodValRef = useRef<HTMLSelectElement>(null);
 
   const tmzSelectField = (tmzObj: any) => {
     return(
@@ -66,13 +81,59 @@ function MainForm(props: IProps) {
     if (form.checkValidity() === false) {
       setValidated(true);
     } else {
-      const buttonAdd = $("#buttonAdd").html();
-      const persNameVal:string= $("#persName").val() as string;
-      const bdDateVal:string = $("#bdDateTime").val() as string;
-      const bdCommVal:string = $("#bdComm").val() as string;
-      const bdTmzVal:string = $("#bdTmz").val() as string;
-      const bdPeriodVal:string = $("#bdPeriod").val() as string;
+      //const buttonAdd = $("#buttonAdd").html();
+      //const buttonAdd:string = (document.getElementById("buttonAdd") as HTMLButtonElement).innerHTML;
+      let buttonAdd:string = "";
+      if (buttonAddRef.current !== null) {
+        buttonAdd = buttonAddRef.current.innerHTML as string;
+      }
+
+      //const persNameVal:string= $("#persName").val() as string;
+      //const persNameVal:string = (document.getElementById("persName") as HTMLInputElement).value;  ///!!! comm
+      //const persNameVal:string = (persNameRef.current as HTMLInputElement).value;
+      let persNameVal:string = "";
+      if (persNameRef.current !== null) {
+        persNameVal = persNameRef.current.value as string;
+      }
+
       
+      //const bdDateVal:string = $("#bdDateTime").val() as string;
+      //const bdDateVal:string = (document.getElementById("bdDateTime") as HTMLInputElement).value; 
+      
+      let bdDateVal:string = "";
+      //console.log(startDate)
+      //console.log(moment(startDate).format('DD.MM.YYYY, H:mm'))
+      //const weekDay = Number(moment(date, 'DD.MM.YYYY').day());
+      bdDateVal = String(moment(startDate).format('DD.MM.YYYY, H:mm'));
+      // if (bdDateValRef.current !== null) {
+      //   bdDateVal = bdDateValRef.current.value as string;
+      // }
+      
+
+      //const bdCommVal:string = $("#bdComm").val() as string;
+      //const bdCommVal:string = (document.getElementById("bdComm") as HTMLInputElement).value;
+      
+      let bdCommVal:string = "";
+      if (bdCommValRef.current !== null) {
+        bdCommVal = bdCommValRef.current.value as string;
+      }
+
+      //const bdTmzVal:string = $("#bdTmz").val() as string;
+      //const bdTmzVal:string = (document.getElementById("bdTmz") as HTMLInputElement).value;
+      
+      let bdTmzVal:string = "";
+      if (bdTmzValRef.current !== null) {
+        bdTmzVal = bdTmzValRef.current.value as string;
+      }
+
+      //const bdPeriodVal:string = $("#bdPeriod").val() as string;
+      //const bdPeriodVal:string = (document.getElementById("bdPeriod") as HTMLInputElement).value;
+     
+      let bdPeriodVal:string = "";
+      if (bdPeriodValRef.current !== null) {
+        bdPeriodVal = bdPeriodValRef.current.value as string;
+      }
+     
       //console.log(bdDateVal);
 
       if (buttonAdd === "Добавить") {
@@ -85,14 +146,21 @@ function MainForm(props: IProps) {
           bdPeriod: bdPeriodVal,
         };
         props.addBdRow(newbdRow);
-        //document.getElementById("persName").focus();
-        const inputPersName = document.getElementById("persName");
-        //const inputPersName = document.getElementById("buttonAdd");
+
+        // const inputPersName = document.getElementById("persName");
+        // if (inputPersName){
+        //   inputPersName.focus();
+        // }
         
-        if (inputPersName){
-          inputPersName.focus();
+         // очищаем поля
+        if (bdCommValRef.current !== null) {
+          bdCommValRef.current.value = "";
         }
-        //: HTMLElement
+        if (persNameRef.current !== null) {
+          persNameRef.current.value = "";
+          persNameRef.current.focus();
+        }
+
       }
       if (buttonAdd === "Редактировать") {
         //const bdDate = moment(bdDateVal).format("DD.MM.YYYY");
@@ -106,23 +174,59 @@ function MainForm(props: IProps) {
         };
         // console.log(newbdRow);
         props.editBdRow(newbdRow);
-        $("#buttonAdd").html("Добавить");
+        //$("#buttonAdd").html("Добавить");
+        //(document.getElementById("buttonAdd") as HTMLButtonElement).innerHTML = "Добавить";
+        //document.getElementById("buttonAdd").innerHTML = "Добавить";
+
+        // if (buttonAddRef.current !== null) {
+        //   buttonAddRef.current.innerHTML = "Добавить";
+        // }
+        setButtonAddName("Добавить");
+
         // очищаем поля
-        $("#persName").val("");
-        $("#bdDate").val("");
-        $("#bdComm").val("");
+
+        //$("#persName").val("");
+        //document.getElementById("persName").value = "";
+        //(document.getElementById("persName") as HTMLInputElement).value = "";
+       
+        // if (persNameRef.current !== null) {
+        //   persNameRef.current.value = "";
+        // }
+        
+        //$("#bdDate").val("");
+        //document.getElementById("bdDate").value = "";
+        //(document.getElementById("bdDate") as HTMLInputElement).value = "";
+        //$("#bdComm").val("");
+
+        //document.getElementById("bdComm").value = "";
+        //(document.getElementById("bdComm") as HTMLInputElement).value = "";
         // $("#bdPeriod").val("");
+
+        // if (bdCommValRef.current !== null) {
+        //   bdCommValRef.current.value = "";
+        // }
+
       }
     }
   };
+
+  const handleDatePicker = (date:any):void => {
+    //date = date && setStartDate(date);
+    //setdatePick(date)
+    setStartDate(date);
+    //console.log(date)
+  }
   return (
     <Row md={1} className="main-page__bd-form">
       <Col>
         <Form noValidate validated={validated} onSubmit={handleAddButtonClick}>
           <Form.Row>
+          {/* <input type="text" ref={persNameRef}></input> */}
             <Form.Group as={Col} controlId="persName">
+
+            {/* <Form.Group as={Col} controlId="persName" ref={persNameRef}> */}
               <Form.Label>Название уведомления:</Form.Label>
-              <Form.Control required type="text" />
+              <Form.Control required type="text" ref={persNameRef}/>
               <Form.Control.Feedback type="invalid">
                 Заполните поле
               </Form.Control.Feedback>
@@ -135,7 +239,8 @@ function MainForm(props: IProps) {
                 className="form-control"
                 locale="ru"
                 selected={startDate}
-                onChange={date => date && setStartDate(date)}
+                //onChange={date => date && setStartDate(date)}
+                onChange={handleDatePicker}
                 showTimeSelect
                 // timeFormat="HH:mm"
                 // dateFormat="mm dd, yyyy h:mm aa"
@@ -146,16 +251,16 @@ function MainForm(props: IProps) {
           </Form.Row>
           
           <Form.Row>
-            <Form.Group as={Col} controlId="bdPeriod">
+            <Form.Group as={Col} controlId="bdPeriod" >
               <Form.Label>Периодичность уведомления:</Form.Label>
-              <Form.Control as="select" defaultValue={DEFAULTPERIOD}> 
+              <Form.Control as="select" defaultValue={DEFAULTPERIOD} ref={bdPeriodValRef} > 
                 {periodArr.map((period: string)=> periodSelectField(period))}
               </Form.Control> 
             </Form.Group>
 
             <Form.Group as={Col} controlId="bdTmz">
               <Form.Label>Часовой пояс:</Form.Label>
-              <Form.Control as="select" defaultValue={TIMEZONE}> 
+              <Form.Control as="select" defaultValue={TIMEZONE} ref={bdTmzValRef} > 
                 {tmzArr.map((tmzObj: any)=> tmzSelectField(tmzObj))}
               </Form.Control> 
             </Form.Group>
@@ -163,12 +268,13 @@ function MainForm(props: IProps) {
 
           <Form.Group controlId="bdComm">
             <Form.Label>Подробности по уведомлению:</Form.Label>
-            <Form.Control as="textarea" rows={3} />
+            <Form.Control as="textarea" rows={3} ref={bdCommValRef} />
           </Form.Group>
 
           {/* <Button type="submit" variant="success" size="lg" block>Добавить</Button> */}
-          <Button id="buttonAdd" type="submit" variant="light" size="lg" block>
-            Добавить
+          <Button id="buttonAdd" type="submit" variant="light" size="lg" block ref={buttonAddRef}>
+            {/* Добавить */}
+            {buttonAddName}
           </Button>
         </Form>
       </Col>
