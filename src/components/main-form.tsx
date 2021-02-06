@@ -59,24 +59,6 @@ function MainForm(props: IProps) {
     )
   }
 
-  // const handleSaveButtonClick = (e: React.SyntheticEvent) => {
-  //   //e.preventDefault();
-  
-  // }
-  // const handleCancelButtonClick = (e: React.SyntheticEvent) => {
-  //   //e.preventDefault();
-  
-  // }
-  // const handleExitButtonClick = (e: React.SyntheticEvent) => {
-  //   //e.preventDefault();
-  //   //localStorage.setItem("jwt", JSON.stringify(jwt));
-  //   localStorage.removeItem("jwt");
-  //   history.push({
-  //     pathname: '/login'
-  //   })
-  // }
-  
-
   const handleAddButtonClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const form: any = e.currentTarget;
@@ -146,15 +128,6 @@ function MainForm(props: IProps) {
               </Form.Control.Feedback>
               {/* <Form.Text className="text-muted">Название уведомления</Form.Text> */}
             </Form.Group>
-
-            {/* <Form.Group as={Col} controlId="bdDate">
-              <Form.Label>Дата, время уведомления:</Form.Label>
-              <Form.Control required type="date" placeholder="01.02.1989" />
-              <Form.Control.Feedback type="invalid">
-                Заполните поле
-              </Form.Control.Feedback>
-            </Form.Group> */}
-
             <Form.Group as={Col} controlId="bdDate">
               <Form.Label>Дата, время уведомления:</Form.Label>
               <DatePicker
@@ -198,35 +171,6 @@ function MainForm(props: IProps) {
             Добавить
           </Button>
         </Form>
-
-
-        {/* <Row>
-        <Button id="buttonSave" type="button" variant="light" size="lg" block>
-          Сохранить
-        </Button>
-        <Button id="buttonCancel" type="button" variant="light" size="lg" block>
-           Отмена
-        </Button>
-        </Row> */}
-
-      {/* <Row>
-        <Col>
-          <Button id="buttonSave" type="button" variant="light" size="lg" block onClick={handleSaveButtonClick}>
-            Сохранить список
-          </Button>
-        </Col>
-        <Col>
-        <Button id="buttonCancel" type="button" variant="light" size="lg" block onClick={handleCancelButtonClick}>
-            Отменить изменения
-        </Button>
-        </Col>
-        <Col>
-        <Button id="buttonExit" type="button" variant="light" size="lg" block onClick={handleExitButtonClick}>
-            Выйти из аккаунта
-        </Button>
-        </Col>
-      </Row> */}
-
       </Col>
     </Row>
   );

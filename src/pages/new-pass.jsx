@@ -53,61 +53,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+function NewPass() {
   const classes = useStyles();
-
   const [reqMessage, setReqMessage] = useState("");
-
   let updatePasswordHandler = () => {
-
     newPassApi(setReqMessage);
-
-    // // const currUserEmail = store.getState().rootReducer.currentUser;
-    // // console.log(currUserEmail);
-    // // this.loadBDfromServer(currUserEmail);
-
-    // const email = document.getElementById('email').value;
-    // if (email){
-    //   const validEmail = validateEmail(email);
-    //   if (validEmail===true){
-    //       const url = "http://localhost:3000/newpassword";
-    //       const data = {currUserEmail: email};
-    //       // const url = "/newpassword";
-    //       axios
-    //         .post(url, {
-    //           data,
-    //         })
-    //         .then((response) => {
-    //           if (response.statusText === "OK") {
-    //             const res = response.data.result; 
-    //             console.log(res);
-    //             if (res==="ok"){
-    //               setReqMessage(response.data.mes);
-    //             }else{
-    //               setReqMessage("Ошибка сервера");
-    //             }
-    //           }
-    //         })
-    //         .catch((error) => {
-    //           console.log(`Ошибка соединения:${error}`);
-    //         });
-    //   }else{
-    //     const mes = "Email имеет не верный формат!";
-    //     setReqMessage(mes);
-    //   }
-    // }else{
-    //   const mes = "Заполните поле Email!";
-    //   setReqMessage(mes);
-    // } 
   };
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        {/* <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar> */}
         <Typography component="h1" variant="h6">
           {/* Новый пароль будет выслан на Ваш email адрес */}
           Сброс пароля
@@ -134,14 +90,8 @@ export default function SignIn() {
             Сменить пароль
           </Button>
           <label className="sign-up__reqMessage-label">{reqMessage}</label>
-        {/* <Typography component="p" variant="p" className={classes.text}>
-          Новый пароль будет выслан на Ваш email адрес
-        </Typography> */}
           <Grid container>
             <Grid item xs>
-              {/* <Link href="/login" variant="body2">
-                На главную
-              </Link> */}
               <Link to="/login">На главную</Link>
             </Grid>
           </Grid>
@@ -153,3 +103,5 @@ export default function SignIn() {
     </Container>
   );
 }
+
+export default NewPass;

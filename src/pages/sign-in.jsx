@@ -20,145 +20,51 @@ import { loginSaveStore } from "../actions/actions";
 import { connect } from "react-redux";
 import { validateEmail } from "../functions";
 import { signInApi } from "../api/signin-api";
+import Copyright from "../components/copyright";
+import useStyles from "../components/signstl-conf";
 
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {"Сервис «Мои уведомления» © "}
+//       {new Date().getFullYear()}
+//       .
+//     </Typography>
+//   );
+// }
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Сервис «Мои уведомления» © "}
-      {/* <Link color="inherit" href="https://material-ui.com/">
-        Сервис Мои уведомления
-      </Link>{' '} */}
-      {new Date().getFullYear()}
-      .
-    </Typography>
-  );
-}
+// const useStyles = makeStyles((theme) => ({
+//   paper: {
+//     marginTop: theme.spacing(8),
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//   },
+//   avatar: {
+//     margin: theme.spacing(1),
+//     backgroundColor: theme.palette.secondary.main,
+//   },
+//   form: {
+//     width: "100%", // Fix IE11 issue.
+//     marginTop: theme.spacing(1),
+//   },
+//   submit: {
+//     margin: theme.spacing(3, 0, 2),
+//   },
+// }));
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
-
-//export default function SignIn() {
 function SignIn(props) {
   const classes = useStyles();
-
   const [reqMessage, setReqMessage] = useState("");
-
     // войти по логину и паролю
   let signInHandler = ()=> {
-    
     signInApi(setReqMessage);
-
-
-    ///
-  //   //let mes = await signInApi();
-  //   (async () => {
-  //     console.log(await signInApi())
-  //     //setReqMessage(await signInApi());
-  //  })()
-  //   //console.log(mes);
-  //   //setReqMessage(mes);
-
-    ////
-
-    // const email = document.getElementById('email').value;
-    // const password = document.getElementById('password').value;
-    // if (email, password){
-    //   const validEmail = validateEmail(email);
-    //   if (validEmail===true){
-    //   // const loginData = {
-    //   //   email: email,
-    //   //   password: password
-    //   // }  
-    //   // console.log(loginData);
-    //     const url = "http://localhost:3000/login";
-    //     //const url = "/login";
-    //     axios
-    //       .post(url, {
-    //         // loginData,
-    //         //user:"test@test"
-    //         username: email, password: password
-    //       })
-    //       .then((response) => {
-    //         let bd;
-    //         if (response.statusText === "OK") {
-    //           console.log(response);
-    //           const jwt = response.data;
-    //           console.log(jwt);
-    //           const loginData = {
-    //             currentUser: email,
-    //             jwtToken: jwt.jwtToken
-    //           } 
-    //           props.loginSaveStore(loginData);
-    //           //localStorage.setItem("jwt", JSON.stringify(jwt));
-    //           localStorage.setItem("loginData", JSON.stringify(loginData));
-    //           console.log("Аутентификация прошла успешно, loginData записан в LocalStorage")
-    //           bd = true;
-    //         }else{
-    //           const mes = "Ошибка сервера";
-    //           setReqMessage(mes);
-    //           bd = false;
-    //         }
-    //         return bd;
-    //       })
-    //       .then((db) => {
-    //         if (db) {
-    //           console.log("Переход на главную страницу после аутентификации");
-    //           history.push({
-    //             pathname: '/home',
-    //             state: { needLoadData: true }
-    //           })
-    //         }
-    //       })
-    //       .catch((error) => {
-    //         if (error.response){
-    //           if (error.response.status === 401){
-    //               setReqMessage("Не верный логин или пароль!");
-    //           }else{
-    //             console.log(`Ошибка соединения:${error}`);
-    //             setReqMessage("Ошибка сервера");
-    //           }
-    //         }else{
-    //           console.log(`Ошибка сервера:${error}`);
-    //           setReqMessage("Ошибка сервера");
-    //         }
-    //       });
-    //     }else{
-    //       const mes = "Email имеет не верный формат!";
-    //       setReqMessage(mes);
-    //     }
-    //   }else{
-    //     const mes = "Заполните обязательные поля!";
-    //     setReqMessage(mes);
-    //   } 
     }
-
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        {/* <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar> */}
         <Typography component="h1" variant="h5">
           Вход
         </Typography>
@@ -185,10 +91,6 @@ function SignIn(props) {
             id="password"
             autoComplete="current-password"
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
           <Button
             type="button"
             fullWidth
@@ -201,15 +103,9 @@ function SignIn(props) {
           <label className="sign-up__reqMessage-label">{reqMessage}</label>
           <Grid container>
             <Grid item xs>
-              {/* <Link href="/newpassword" variant="body2">
-                Забыли пароль?
-              </Link> */}
               <Link to="/newpassword">Забыли пароль?</Link>
             </Grid>
             <Grid item>
-              {/* <Link href="/signup" variant="body2">
-                Нет аккаунта? Регистрация
-              </Link> */}
               <Link to="/signup">Нет аккаунта? Регистрация</Link>
             </Grid>
           </Grid>
