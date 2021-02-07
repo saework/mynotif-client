@@ -39,11 +39,15 @@ interface IProps {
   addBdRow: (newbdRow: IBdRow) => void;
   checkedId: number;
   editBdRow: (newbdRow: IBdRow) => void;
+  setBdPeriodVal: (bdPeriodVal: string) => void;
+  bdPeriodVal: string,
 }
 
 function MainForm(props: IProps) {
   // const bdRows = props.bdRows;
   const [buttonAddName, setButtonAddName] = useState("Добавить");
+  //const [bdPeriodVal, setBdPeriodVal] = useState(DEFAULTPERIOD);
+ 
  // const [persNameInpVal, setpersNameInpVal] = useState("");
   const [validated, setValidated] = useState(false);
   //const [datePick, setdatePick] = useState("");
@@ -58,7 +62,6 @@ function MainForm(props: IProps) {
   //const persNameRef = useRef();  ///!!!  
   const buttonAddRef = useRef<HTMLButtonElement>(null);
   const persNameRef = useRef<HTMLInputElement>(null);
-  const bdDateValRef = useRef<any>(null);
   const bdCommValRef = useRef<HTMLTextAreaElement>(null);
   const bdTmzValRef = useRef<HTMLSelectElement>(null);
   const bdPeriodValRef = useRef<HTMLSelectElement>(null);
@@ -129,10 +132,12 @@ function MainForm(props: IProps) {
       //const bdPeriodVal:string = $("#bdPeriod").val() as string;
       //const bdPeriodVal:string = (document.getElementById("bdPeriod") as HTMLInputElement).value;
      
-      let bdPeriodVal:string = "";
-      if (bdPeriodValRef.current !== null) {
-        bdPeriodVal = bdPeriodValRef.current.value as string;
-      }
+      ///!!! comm
+      // let bdPeriodVal:string = "";
+      // if (bdPeriodValRef.current !== null) {
+      //   bdPeriodVal = bdPeriodValRef.current.value as string;
+      // }
+      ///!!! comm
      
       //console.log(bdDateVal);
 
@@ -143,7 +148,9 @@ function MainForm(props: IProps) {
           bdDate: bdDateVal,
           bdComm: bdCommVal,
           bdTmz: bdTmzVal,
-          bdPeriod: bdPeriodVal,
+          //bdPeriod: bdPeriodVal,
+          bdPeriod: props.bdPeriodVal,
+
         };
         props.addBdRow(newbdRow);
 
@@ -170,7 +177,7 @@ function MainForm(props: IProps) {
           bdDate: bdDateVal,
           bdComm: bdCommVal,
           bdTmz: bdTmzVal,
-          bdPeriod: bdPeriodVal
+          bdPeriod: props.bdPeriodVal
         };
         // console.log(newbdRow);
         props.editBdRow(newbdRow);
@@ -209,6 +216,13 @@ function MainForm(props: IProps) {
       }
     }
   };
+
+  const handleBdPeriod = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const bdPeriod: any = e.currentTarget;
+    props.setBdPeriodVal(bdPeriod.value)
+    //console.log(bdPeriod.value);
+  }
 
   const handleDatePicker = (date:any):void => {
     //date = date && setStartDate(date);
@@ -253,7 +267,7 @@ function MainForm(props: IProps) {
           <Form.Row>
             <Form.Group as={Col} controlId="bdPeriod" >
               <Form.Label>Периодичность уведомления:</Form.Label>
-              <Form.Control as="select" defaultValue={DEFAULTPERIOD} ref={bdPeriodValRef} > 
+              <Form.Control as="select" defaultValue={DEFAULTPERIOD} ref={bdPeriodValRef} onChange={handleBdPeriod} > 
                 {periodArr.map((period: string)=> periodSelectField(period))}
               </Form.Control> 
             </Form.Group>

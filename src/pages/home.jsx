@@ -21,6 +21,12 @@ import { sendBDtoServer, loadBDfromServer } from "../api/home-api";
   const [loading, setLoading] = useState("");
   const [needLoadData, setNeedLoadData] = useState("");
 
+///!!!
+const DEFAULTPERIOD = "Без повторов";
+const [bdPeriodVal, setBdPeriodVal] = useState(DEFAULTPERIOD);
+///!!!
+
+
   useEffect(() => {
     const historyState = history.location.state;
     if (historyState){
@@ -83,8 +89,10 @@ import { sendBDtoServer, loadBDfromServer } from "../api/home-api";
     return (
       <div>
         <Container>
-          <MainInfo bdRows={bdRows} />
-          <MainForm bdRows={bdRows} />
+          {/* <MainInfo bdRows={bdRows} /> */}
+          {/* <MainForm bdRows={bdRows} /> */}
+          <MainInfo bdRows={bdRows} bdPeriodVal={bdPeriodVal} setBdPeriodVal={setBdPeriodVal}/>
+          <MainForm bdRows={bdRows} bdPeriodVal={bdPeriodVal} setBdPeriodVal={setBdPeriodVal} />
           <Alert
             className="message__alert_center"
             variant="light"

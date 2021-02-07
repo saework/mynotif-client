@@ -34,7 +34,8 @@ function MainInfo(props) {
       $("#bdDate").val(bdDate);
       $("#bdComm").val(bdRow.bdComm);
       $("#bdTmz").val(bdRow.bdTmz);
-      $("#bdPeriod").val(bdRow.bdPeriod);
+      //$("#bdPeriod").val(bdRow.bdPeriod);
+      props.setBdPeriodVal(bdRow.bdPeriod);
     }
   };
 
