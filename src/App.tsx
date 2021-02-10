@@ -3,7 +3,8 @@
 import React from "react";
 import "./style.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
-import MainPage from "./pages/home";
+//import MainPage from "./pages/home";
+import Home from "./pages/home";
 import SignIn from "./pages/sign-in";
 import SignUp from "./pages/sign-up";
 import NewPass from "./pages/new-pass";
@@ -56,7 +57,7 @@ class App extends React.PureComponent<IProps, IState> {
           <Route history={history} path="/signup" component={SignUp} />
           <Route history={history} path="/login" component={SignIn} />
           <Route history={history} path="/newpassword" component={NewPass} />
-          <Route history={history} path="/home" component={MainPage} />
+          <Route history={history} path="/home" component={Home} />
           {/* <Route exact path="/" render={() => (<Redirect to="/home" />)} />  */}
           {/* <Route path="/" component={MainPage} /> */}
           {/* <Route path="/"  /> */}

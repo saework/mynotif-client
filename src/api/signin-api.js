@@ -6,9 +6,9 @@ import { validateEmail } from "../functions";
 import { loginSaveStore } from "../actions/actions";
 
 
-export let signInApi = (setReqMessage) => {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+export let signInApi = (setReqMessage, email, password) => {
+    //const email = document.getElementById('email').value;
+    //const password = document.getElementById('password').value;
     if (email, password){
       const validEmail = validateEmail(email);
       if (validEmail===true){

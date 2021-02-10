@@ -20,6 +20,39 @@
   color:rgb(209, 209, 209);
   margin: 10px 0 10px 0;
 }
+.main-form__button-add{
+  // max-width: 700px;
+  height: 70px;
+  margin: 1.5rem auto 0 auto;
+}
+.main-info__th-num{
+  width: 5%;
+}
+.main-info__th-name{
+  width: 25%;
+}
+.main-info__th-text{
+  width: 30%;
+}
+.main-info__th-date{
+  width: 15%;
+}
+.main-info__th-period{
+  width: 15%;
+}
+.main-info__th-edit{
+  width: 10%;
+}
+.was-validated .form-control:valid, .form-control.is-valid {
+  background-position: right calc(0.375em + 0.7875rem) center;
+}
+.was-validated textarea.form-control:valid, textarea.form-control.is-valid{
+  background-position: top calc(0.375em + 0.1875rem) right calc(0.375em + 0.7875rem);
+}
+// table tr{
+//   //color:red;
+//    word-break: break-all;
+// }
 
 .main-page__bd-info{
  // background-color: yellow;
@@ -69,6 +102,7 @@ th.main-info__th-edit{
 .message__alert_center{
   display: flex;
   justify-content: center;
+  margin-bottom: 0;
 }
 .react-datepicker__input-container {
    width: inherit;
@@ -77,6 +111,25 @@ th.main-info__th-edit{
 .react-datepicker-wrapper {
    width: 100%;
   display: block;
+}
+
+.table thead th {
+  // color: #28a745;
+  color: #5b635d;
+}
+
+.main-info__page-capt{
+  display: flex;
+  justify-content: center;
+  margin: 15px auto 20px auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #28a745;
+}
+
+.home__button{
+  margin-bottom: 1.5rem;
 }
 
 .d1{
@@ -98,72 +151,77 @@ th.main-info__th-edit{
   background-color: rgb(1, 6, 12);
 }
      
-
+@media screen and (max-width:780px) {
+  div.react-datepicker{
+    display: none;
+  }
+}
 
 /////////////////////////////////////////////
 
 
 
 //переменные
-$main-color: red;
-$main-font: Arial;
+// $main-color: red;
+// $main-font: Arial;
 
-//расширения для классов
-%mainblocks{
-  background-color: yellow;
-  padding: 10px 10px 10px 10px;
-}
+// //расширения для классов
+// %mainblocks{
+//   background-color: yellow;
+//   padding: 10px 10px 10px 10px;
+// }
 
-.main-block__div{
-  color: $main-color;
-  @extend %mainblocks; 
-  //вложенные правила
-  div{
-    p{
-      font-family: $main-font;
-    }
-  }
-}
-//миксины
-@mixin marg($pix){
-  margin-top: $pix;
-  margin-left: $pix;
-  margin-bottom: $pix;
-  margin-right: $pix;
-  width: $pix*3;
-  height: $pix*3;
-}
-.left-block__div{
-  @include marg(10px);
-  @extend %mainblocks; 
-  div{
-    width: (10px + 10px)*2 ;
-  }
-}
-
-
-//функции
-$val1: 10px;
-$val2: 20px;
-@function fval($n, $x){
-  @return ($val1 * $n) + ($val2 * $x);
-}
+// .main-block__div{
+//   color: $main-color;
+//   @extend %mainblocks; 
+//   //вложенные правила
+//   div{
+//     p{
+//       font-family: $main-font;
+//     }
+//   }
+// }
+// //миксины
+// @mixin marg($pix){
+//   margin-top: $pix;
+//   margin-left: $pix;
+//   margin-bottom: $pix;
+//   margin-right: $pix;
+//   width: $pix*3;
+//   height: $pix*3;
+// }
+// .left-block__div{
+//   @include marg(10px);
+//   @extend %mainblocks; 
+//   div{
+//     width: (10px + 10px)*2 ;
+//   }
+// }
 
 
-//математические вычисления
-.right-block__div{ 
-  @extend %mainblocks; 
-  width: fval(2,3);
-  height: (100px - 20px)/2 ;
+// //функции
+// $val1: 10px;
+// $val2: 20px;
+// @function fval($n, $x){
+//   @return ($val1 * $n) + ($val2 * $x);
+// }
 
-}
 
-//вложенные свойства
-.sv-block__div{
-  margin: {
-    left:  10px;
-    right: 10px;
-    top: 10px;
-    bottom: 10px;
-  }
-}
+// //математические вычисления
+// .right-block__div{ 
+//   @extend %mainblocks; 
+//   width: fval(2,3);
+//   height: (100px - 20px)/2 ;
+
+// }
+
+// //вложенные свойства
+// .sv-block__div{
+//   margin: {
+//     left:  10px;
+//     right: 10px;
+//     top: 10px;
+//     bottom: 10px;
+//   }
+// }
+

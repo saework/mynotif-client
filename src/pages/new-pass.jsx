@@ -16,49 +16,58 @@ import { validateEmail } from "../functions";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { newPassApi } from "../api/newpass-api";
+import Copyright from "../components/copyright";
+import useStyles from "../components/signstl-conf";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Сервис «Мои уведомления» © "}
-      {/* <Link color="inherit" href="https://material-ui.com/">
-        Сервис Мои уведомления
-      </Link>{' '} */}
-      {new Date().getFullYear()}
-      .
-    </Typography>
-  );
-}
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {"Сервис «Мои уведомления» © "}
+//       {/* <Link color="inherit" href="https://material-ui.com/">
+//         Сервис Мои уведомления
+//       </Link>{' '} */}
+//       {new Date().getFullYear()}
+//       .
+//     </Typography>
+//   );
+// }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  text: {
-    margin: theme.spacing(2, 0, 2),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   paper: {
+//     marginTop: theme.spacing(8),
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//   },
+//   avatar: {
+//     margin: theme.spacing(1),
+//     backgroundColor: theme.palette.secondary.main,
+//   },
+//   form: {
+//     width: "100%", // Fix IE11 issue.
+//     marginTop: theme.spacing(1),
+//   },
+//   submit: {
+//     margin: theme.spacing(3, 0, 2),
+//   },
+//   text: {
+//     margin: theme.spacing(2, 0, 2),
+//   },
+// }));
 
 function NewPass() {
   const classes = useStyles();
   const [reqMessage, setReqMessage] = useState("");
+  const [email, setEmailVal] = useState("");
+
   let updatePasswordHandler = () => {
-    newPassApi(setReqMessage);
+    newPassApi(setReqMessage, email);
   };
+  const emailInputHandler = (e) => {
+    e.preventDefault();
+    const emailEl = e.currentTarget;
+    setEmailVal(emailEl.value)
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -78,6 +87,7 @@ function NewPass() {
                 label="Email адрес"
                 name="email"
                 autoComplete="email"
+                onChange={emailInputHandler}
               />
             </Grid>
           <Button

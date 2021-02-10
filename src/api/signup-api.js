@@ -5,14 +5,16 @@ import { validateEmail } from "../functions";
 import { loginSaveStore } from "../actions/actions";
 
 
-export let signUpApi = (setReqMessage) => {
+export let signUpApi = (setReqMessage, email, password, passwordRpt) => {
 
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  const passwordRpt = document.getElementById('passwordRpt').value;
+  //const email = document.getElementById('email').value;
+  //const password = document.getElementById('password').value;
+  //const passwordRpt = document.getElementById('passwordRpt').value;
 
   //console.log(validateEmail(email))
-
+  console.log(email)
+  console.log(password)
+  console.log(passwordRpt)
   if (email && password && passwordRpt){
     if (password===passwordRpt){
       const validEmail = validateEmail(email);

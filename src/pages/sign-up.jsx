@@ -27,10 +27,28 @@ import useStyles from "../components/signstl-conf";
 function SignUp(props) {
   const classes = useStyles();
   const [reqMessage, setReqMessage] = useState("");
+  const [email, setEmailVal] = useState("");
+  const [password, setPasswordVal] = useState("");
+  const [passwordRpt, setPasswordRptVal] = useState("");
 
    // войти по логину и паролю
   let signUpHandler = ()=> {
-    signUpApi(setReqMessage);
+    signUpApi(setReqMessage, email, password, passwordRpt);
+  }
+  const emailInputHandler = (e) => {
+    e.preventDefault();
+    const emailEl = e.currentTarget;
+    setEmailVal(emailEl.value)
+  }
+  const passInputHandler = (e) => {
+    e.preventDefault();
+    const passwordEl = e.currentTarget;
+    setPasswordVal(passwordEl.value)
+  }
+  const passInputRptHandler = (e) => {
+    e.preventDefault();
+    const passwordRptEl = e.currentTarget;
+    setPasswordRptVal(passwordRptEl.value)
   }
 
   return (
@@ -52,6 +70,7 @@ function SignUp(props) {
                 label="Email адрес"
                 name="email"
                 autoComplete="email"
+                onChange={emailInputHandler}
               />
             </Grid>
             <Grid item xs={12}>
@@ -64,6 +83,7 @@ function SignUp(props) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={passInputHandler}
               />
             </Grid>
             <Grid item xs={12}>
@@ -76,6 +96,7 @@ function SignUp(props) {
                 type="password"
                 id="passwordRpt"
                 autoComplete="current-password"
+                onChange={passInputRptHandler}
               />
             </Grid>
           </Grid>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Alert, Row, Col, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -12,18 +12,39 @@ import "../style.scss";
 import { store, history } from "../store/store";
 import { loadBD, loginSaveStore } from "../actions/actions";
 import _ from "lodash";
-import moment from "moment";
 import { sendBDtoServer, loadBDfromServer } from "../api/home-api";
 
-  function MainPage(props) {
+import moment from "moment";
+import momenttz from "moment-timezone";
+import DatePicker, { registerLocale, setDefaultLocale } from  "react-datepicker";
+import ru from 'date-fns/locale/ru';
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
 
+// const TIMEZONE: string = "Asia/Yekaterinburg";
+// const DEFAULTPERIOD: string = "Без повторов";
+// const periodArr: string[] = ["Без повторов",  "Ежедневно", "Еженедельно", "ПН-ПТ", "Ежемесячно", "Ежегодно"];
 
-  const [loading, setLoading] = useState("");
-  const [needLoadData, setNeedLoadData] = useState("");
+const TIMEZONE = "Asia/Yekaterinburg";
+const DEFAULTPERIOD = "Без повторов";
+//const periodArr= ["Без повторов",  "Ежедневно", "Еженедельно", "ПН-ПТ", "Ежемесячно", "Ежегодно"];
+
+function Home(props) {
+
+const [loading, setLoading] = useState("");
+const [needLoadData, setNeedLoadData] = useState("");
 
 ///!!!
-const DEFAULTPERIOD = "Без повторов";
+const [buttonAddName, setButtonAddName] = useState("Добавить");
 const [bdPeriodVal, setBdPeriodVal] = useState(DEFAULTPERIOD);
+//const [startDate, setStartDate] = useState(setHours(setMinutes(new Date(), 0), 9));
+const [startDate, setStartDate] = useState(new Date())
+const [persNameVal, setPersNameVal] = useState("");
+const [bdCommVal, setBdCommVal] = useState("");
+const [bdTmzVal, setBdTmzVal] = useState(TIMEZONE);
+
+//const persNameRef = useRef<HTMLInputElement>(null);
+const persNameRef = useRef(null);
 ///!!!
 
 
@@ -91,8 +112,27 @@ const [bdPeriodVal, setBdPeriodVal] = useState(DEFAULTPERIOD);
         <Container>
           {/* <MainInfo bdRows={bdRows} /> */}
           {/* <MainForm bdRows={bdRows} /> */}
-          <MainInfo bdRows={bdRows} bdPeriodVal={bdPeriodVal} setBdPeriodVal={setBdPeriodVal}/>
-          <MainForm bdRows={bdRows} bdPeriodVal={bdPeriodVal} setBdPeriodVal={setBdPeriodVal} />
+          <MainInfo 
+            bdRows={bdRows}
+            bdPeriodVal={bdPeriodVal} setBdPeriodVal={setBdPeriodVal}
+            buttonAddName={buttonAddName} setButtonAddName={setButtonAddName}
+            startDate={startDate} setStartDate={setStartDate}
+            persNameVal={persNameVal} setPersNameVal={setPersNameVal}
+            bdCommVal={bdCommVal} setBdCommVal={setBdCommVal}
+            bdTmzVal={bdTmzVal} setBdTmzVal={setBdTmzVal}
+            persNameRef={persNameRef}
+            
+            />
+          <MainForm
+            bdRows={bdRows}
+            bdPeriodVal={bdPeriodVal} setBdPeriodVal={setBdPeriodVal}
+            buttonAddName={buttonAddName} setButtonAddName={setButtonAddName}
+            startDate={startDate} setStartDate={setStartDate}
+            persNameVal={persNameVal} setPersNameVal={setPersNameVal}
+            bdCommVal={bdCommVal} setBdCommVal={setBdCommVal}
+            bdTmzVal={bdTmzVal} setBdTmzVal={setBdTmzVal}
+            persNameRef={persNameRef}
+            />
           <Alert
             className="message__alert_center"
             variant="light"
@@ -102,17 +142,18 @@ const [bdPeriodVal, setBdPeriodVal] = useState(DEFAULTPERIOD);
           </Alert>
       <Row>
         <Col>
-          <Button id="buttonSave" type="button" variant="light" size="lg" block onClick={handlerSaveToServer}>
+          <Button id="buttonSave" type="button" variant="info" size="lg" block onClick={handlerSaveToServer} className="home__button">
             Сохранить список
           </Button>
         </Col>
         <Col>
-        <Button id="buttonCancel" type="button" variant="light" size="lg" block onClick={handlerLoadFromServer}>
-            Отменить изменения
+        <Button id="buttonCancel" type="button" variant="info" size="lg" block onClick={handlerLoadFromServer} className="home__button">
+            {/* Отменить изменения */}
+            Загрузить список
         </Button>
         </Col>
         <Col>
-        <Button id="buttonExit" type="button" variant="light" size="lg" block onClick={handleExitButtonClick}>
+        <Button id="buttonExit" type="button" variant="danger" size="lg" block onClick={handleExitButtonClick} className="home__button">
             Выйти из аккаунта
         </Button>
         </Col>
@@ -143,4 +184,4 @@ const mapDispatchToProps = (dispatch) => ({
   // delBdRow: newbdRow=>dispatch(delBdRow(newbdRow)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -20,8 +20,10 @@ registerLocale('ru', ru)
 
 // import { store } from "../store/store";
 // import { extendWith } from "lodash";
-const TIMEZONE: string = "Asia/Yekaterinburg";
-const DEFAULTPERIOD: string = "Без повторов";
+
+ const TIMEZONE: string = "Asia/Yekaterinburg";
+ const DEFAULTPERIOD: string = "Без повторов";
+
 const periodArr: string[] = ["Без повторов",  "Ежедневно", "Еженедельно", "ПН-ПТ", "Ежемесячно", "Ежегодно"];
 //const TIMEZONE = "Europe/Moscow";
 
@@ -39,32 +41,52 @@ interface IProps {
   addBdRow: (newbdRow: IBdRow) => void;
   checkedId: number;
   editBdRow: (newbdRow: IBdRow) => void;
+  bdPeriodVal: string;
   setBdPeriodVal: (bdPeriodVal: string) => void;
-  bdPeriodVal: string,
+  buttonAddName: string;
+  setButtonAddName: (buttonAddName: string) => void;
+  startDate: any;
+  setStartDate: (startDate: string) => void;
+  persNameVal: string;
+  setPersNameVal: (persNameVal: string) => void;
+  bdCommVal: string;
+  setBdCommVal: (bdCommVal: string) => void; 
+  bdTmzVal: string;
+  setBdTmzVal: (bdTmzVal: string) => void; 
+  persNameRef: any; 
 }
 
-function MainForm(props: IProps) {
-  // const bdRows = props.bdRows;
-  const [buttonAddName, setButtonAddName] = useState("Добавить");
-  //const [bdPeriodVal, setBdPeriodVal] = useState(DEFAULTPERIOD);
- 
- // const [persNameInpVal, setpersNameInpVal] = useState("");
-  const [validated, setValidated] = useState(false);
-  //const [datePick, setdatePick] = useState("");
-  const [startDate, setStartDate] = useState<any>(
-    setHours(setMinutes(new Date(), 0), 9)
-  );
+// bdPeriodVal={bdPeriodVal} setBdPeriodVal={setBdPeriodVal}
+// buttonAddName={buttonAddName} setButtonAddName={setButtonAddName}
+// startDate={startDate} setStartDate={setStartDate}
+// persNameVal={persNameVal} setPersNameVal={setPersNameVal}
+// bdCommVal={bdCommVal} setBdCommVal={setBdCommVal}
+// bdTmzVal={bdTmzVal} setBdTmzVal={setBdTmzVal}
 
+
+function MainForm(props: IProps) {
+  const [validated, setValidated] = useState(false);
+  // const bdRows = props.bdRows;
+  //const [buttonAddName, setButtonAddName] = useState("Добавить");
+  //const [bdPeriodVal, setBdPeriodVal] = useState(DEFAULTPERIOD);
+  //const [startDate, setStartDate] = useState<any>(setHours(setMinutes(new Date(), 0), 9));
+  
+  //const [persNameVal, setPersNameVal] = useState("");
+  //const [bdCommVal, setBdCommVal] = useState("");
+  //const [bdTmzVal, setBdTmzVal] = useState("");
+
+  ////const [datePick, setdatePick] = useState("");
+  //// const [persNameInpVal, setpersNameInpVal] = useState("");
   // persName
   // bdDate
   // bdComm
 
   //const persNameRef = useRef();  ///!!!  
-  const buttonAddRef = useRef<HTMLButtonElement>(null);
-  const persNameRef = useRef<HTMLInputElement>(null);
-  const bdCommValRef = useRef<HTMLTextAreaElement>(null);
-  const bdTmzValRef = useRef<HTMLSelectElement>(null);
-  const bdPeriodValRef = useRef<HTMLSelectElement>(null);
+  //const buttonAddRef = useRef<HTMLButtonElement>(null);
+  //const persNameRef = useRef<HTMLInputElement>(null);
+  //const bdCommValRef = useRef<HTMLTextAreaElement>(null);
+  //const bdTmzValRef = useRef<HTMLSelectElement>(null);
+  //const bdPeriodValRef = useRef<HTMLSelectElement>(null);
 
   const tmzSelectField = (tmzObj: any) => {
     return(
@@ -86,28 +108,37 @@ function MainForm(props: IProps) {
     } else {
       //const buttonAdd = $("#buttonAdd").html();
       //const buttonAdd:string = (document.getElementById("buttonAdd") as HTMLButtonElement).innerHTML;
-      let buttonAdd:string = "";
-      if (buttonAddRef.current !== null) {
-        buttonAdd = buttonAddRef.current.innerHTML as string;
-      }
+     
+      // let buttonAdd:string = "";
+      // if (buttonAddRef.current !== null) {
+      //   buttonAdd = buttonAddRef.current.innerHTML as string;
+      // }
 
       //const persNameVal:string= $("#persName").val() as string;
       //const persNameVal:string = (document.getElementById("persName") as HTMLInputElement).value;  ///!!! comm
       //const persNameVal:string = (persNameRef.current as HTMLInputElement).value;
-      let persNameVal:string = "";
-      if (persNameRef.current !== null) {
-        persNameVal = persNameRef.current.value as string;
-      }
+     
+      // let persNameVal:string = "";
+      // if (persNameRef.current !== null) {
+      //   persNameVal = persNameRef.current.value as string;
+      // }
 
       
       //const bdDateVal:string = $("#bdDateTime").val() as string;
-      //const bdDateVal:string = (document.getElementById("bdDateTime") as HTMLInputElement).value; 
+      //const bdDateVal:string = (document.getElementById("bdDateTime") as HTMLInputElement).value; //!!!
       
-      let bdDateVal:string = "";
+      //let bdDateVal:string = "";
       //console.log(startDate)
       //console.log(moment(startDate).format('DD.MM.YYYY, H:mm'))
       //const weekDay = Number(moment(date, 'DD.MM.YYYY').day());
-      bdDateVal = String(moment(startDate).format('DD.MM.YYYY, H:mm'));
+
+      let bdDateVal:string = ""; ///!!!
+      bdDateVal = moment(props.startDate).format('DD.MM.YYYY, H:mm');
+
+      //bdDateVal = (moment(props.startDate).format('DD.MM.YYYY, H:mm'));  dd.mm.yyyy, HH:mm
+      //bdDateVal = String(props.startDate);  ///!!!
+      //bdDateVal = String(moment(props.startDate).format('dd.mm.yyyy, HH:mm'));
+      
       // if (bdDateValRef.current !== null) {
       //   bdDateVal = bdDateValRef.current.value as string;
       // }
@@ -116,18 +147,18 @@ function MainForm(props: IProps) {
       //const bdCommVal:string = $("#bdComm").val() as string;
       //const bdCommVal:string = (document.getElementById("bdComm") as HTMLInputElement).value;
       
-      let bdCommVal:string = "";
-      if (bdCommValRef.current !== null) {
-        bdCommVal = bdCommValRef.current.value as string;
-      }
+      // let bdCommVal:string = "";
+      // if (bdCommValRef.current !== null) {
+      //   bdCommVal = bdCommValRef.current.value as string;
+      // }
 
       //const bdTmzVal:string = $("#bdTmz").val() as string;
       //const bdTmzVal:string = (document.getElementById("bdTmz") as HTMLInputElement).value;
       
-      let bdTmzVal:string = "";
-      if (bdTmzValRef.current !== null) {
-        bdTmzVal = bdTmzValRef.current.value as string;
-      }
+      // let bdTmzVal:string = "";
+      // if (bdTmzValRef.current !== null) {
+      //   bdTmzVal = bdTmzValRef.current.value as string;
+      // }
 
       //const bdPeriodVal:string = $("#bdPeriod").val() as string;
       //const bdPeriodVal:string = (document.getElementById("bdPeriod") as HTMLInputElement).value;
@@ -141,13 +172,13 @@ function MainForm(props: IProps) {
      
       //console.log(bdDateVal);
 
-      if (buttonAdd === "Добавить") {
+      if (props.buttonAddName === "Добавить") {
         const newbdRow: IBdRow = {
           id: getCurrentId() + 1,
-          persName: persNameVal,
+          persName: props.persNameVal,
           bdDate: bdDateVal,
-          bdComm: bdCommVal,
-          bdTmz: bdTmzVal,
+          bdComm: props.bdCommVal,
+          bdTmz: props.bdTmzVal,
           //bdPeriod: bdPeriodVal,
           bdPeriod: props.bdPeriodVal,
 
@@ -160,23 +191,29 @@ function MainForm(props: IProps) {
         // }
         
          // очищаем поля
-        if (bdCommValRef.current !== null) {
-          bdCommValRef.current.value = "";
+        // if (bdCommValRef.current !== null) {
+        //   bdCommValRef.current.value = "";
+        // }
+        // if (persNameRef.current !== null) {
+        //   persNameRef.current.value = "";
+        //   persNameRef.current.focus();
+        // }
+        props.setBdCommVal("");
+        props.setPersNameVal("");
+        if (props.persNameRef.current !== null) {
+          props.persNameRef.current.focus();
         }
-        if (persNameRef.current !== null) {
-          persNameRef.current.value = "";
-          persNameRef.current.focus();
-        }
+        setValidated(false);
 
       }
-      if (buttonAdd === "Редактировать") {
+      if (props.buttonAddName === "Сохранить изменения") {
         //const bdDate = moment(bdDateVal).format("DD.MM.YYYY");
         const newbdRow = {
           id: props.checkedId,
-          persName: persNameVal,
+          persName: props.persNameVal,
           bdDate: bdDateVal,
-          bdComm: bdCommVal,
-          bdTmz: bdTmzVal,
+          bdComm: props.bdCommVal,
+          bdTmz: props.bdTmzVal,
           bdPeriod: props.bdPeriodVal
         };
         // console.log(newbdRow);
@@ -188,10 +225,13 @@ function MainForm(props: IProps) {
         // if (buttonAddRef.current !== null) {
         //   buttonAddRef.current.innerHTML = "Добавить";
         // }
-        setButtonAddName("Добавить");
+        props.setButtonAddName("Добавить");
 
         // очищаем поля
-
+        props.setPersNameVal("");
+        props.setBdCommVal("");
+        setValidated(false);
+        
         //$("#persName").val("");
         //document.getElementById("persName").value = "";
         //(document.getElementById("persName") as HTMLInputElement).value = "";
@@ -216,18 +256,37 @@ function MainForm(props: IProps) {
       }
     }
   };
-
+  const handleBdTmz = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const bdTmz: any = e.currentTarget;
+    props.setBdTmzVal(bdTmz.value)
+    //console.log(bdPeriod.value);
+  }
+  const handleBdComm = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const bdComm: any = e.currentTarget;
+    props.setBdCommVal(bdComm.value)
+    //console.log(bdPeriod.value);
+  }
+  const handlePersName = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const persName: any = e.currentTarget;
+    props.setPersNameVal(persName.value)
+    //console.log(bdPeriod.value);
+  }
   const handleBdPeriod = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const bdPeriod: any = e.currentTarget;
     props.setBdPeriodVal(bdPeriod.value)
     //console.log(bdPeriod.value);
   }
-
   const handleDatePicker = (date:any):void => {
     //date = date && setStartDate(date);
     //setdatePick(date)
-    setStartDate(date);
+    //console.log(date.format())
+    console.log(date)
+    props.setStartDate(date);
+   //props.setStartDate(date.format());
     //console.log(date)
   }
   return (
@@ -240,7 +299,7 @@ function MainForm(props: IProps) {
 
             {/* <Form.Group as={Col} controlId="persName" ref={persNameRef}> */}
               <Form.Label>Название уведомления:</Form.Label>
-              <Form.Control required type="text" ref={persNameRef}/>
+              <Form.Control required type="text" ref={props.persNameRef} onChange={handlePersName} value ={props.persNameVal}/>
               <Form.Control.Feedback type="invalid">
                 Заполните поле
               </Form.Control.Feedback>
@@ -252,13 +311,15 @@ function MainForm(props: IProps) {
                 id="bdDateTime"
                 className="form-control"
                 locale="ru"
-                selected={startDate}
+                selected={props.startDate}
+                //selected={startDate}
                 //onChange={date => date && setStartDate(date)}
                 onChange={handleDatePicker}
                 showTimeSelect
                 // timeFormat="HH:mm"
                 // dateFormat="mm dd, yyyy h:mm aa"
                 dateFormat="Pp"
+                //dateFormat="dd.mm.yyyy, HH:mm"
               />
             </Form.Group>
 
@@ -266,15 +327,16 @@ function MainForm(props: IProps) {
           
           <Form.Row>
             <Form.Group as={Col} controlId="bdPeriod" >
-              <Form.Label>Периодичность уведомления:</Form.Label>
-              <Form.Control as="select" defaultValue={DEFAULTPERIOD} ref={bdPeriodValRef} onChange={handleBdPeriod} > 
+              {/* <Form.Label>Периодичность уведомления:</Form.Label> */}
+              <Form.Label>Повтор:</Form.Label>
+              <Form.Control as="select" defaultValue={DEFAULTPERIOD} onChange={handleBdPeriod}  value ={props.bdPeriodVal}> 
                 {periodArr.map((period: string)=> periodSelectField(period))}
               </Form.Control> 
             </Form.Group>
 
             <Form.Group as={Col} controlId="bdTmz">
               <Form.Label>Часовой пояс:</Form.Label>
-              <Form.Control as="select" defaultValue={TIMEZONE} ref={bdTmzValRef} > 
+              <Form.Control as="select" defaultValue={TIMEZONE} onChange={handleBdTmz} value ={props.bdTmzVal}> 
                 {tmzArr.map((tmzObj: any)=> tmzSelectField(tmzObj))}
               </Form.Control> 
             </Form.Group>
@@ -282,13 +344,13 @@ function MainForm(props: IProps) {
 
           <Form.Group controlId="bdComm">
             <Form.Label>Подробности по уведомлению:</Form.Label>
-            <Form.Control as="textarea" rows={3} ref={bdCommValRef} />
+            <Form.Control as="textarea" rows={3} onChange={handleBdComm} value ={props.bdCommVal} />
           </Form.Group>
 
-          {/* <Button type="submit" variant="success" size="lg" block>Добавить</Button> */}
-          <Button id="buttonAdd" type="submit" variant="light" size="lg" block ref={buttonAddRef}>
+          {/* <Button type="submit" variant="light" size="lg" block>Добавить</Button> */}
+          <Button id="buttonAdd" type="submit" variant="success" size="lg" block className="main-form__button-add" >
             {/* Добавить */}
-            {buttonAddName}
+            {props.buttonAddName}
           </Button>
         </Form>
       </Col>

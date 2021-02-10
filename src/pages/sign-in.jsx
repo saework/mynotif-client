@@ -26,10 +26,24 @@ import useStyles from "../components/signstl-conf";
 function SignIn(props) {
   const classes = useStyles();
   const [reqMessage, setReqMessage] = useState("");
+  const [email, setEmailVal] = useState("");
+  const [password, setPasswordVal] = useState("");
+
     // войти по логину и паролю
   let signInHandler = ()=> {
-    signInApi(setReqMessage);
+    signInApi(setReqMessage, email, password);
     }
+
+  const emailInputHandler = (e) => {
+    e.preventDefault();
+    const emailEl = e.currentTarget;
+    setEmailVal(emailEl.value)
+  }
+  const passInputHandler = (e) => {
+    e.preventDefault();
+    const passwordEl = e.currentTarget;
+    setPasswordVal(passwordEl.value)
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -49,6 +63,7 @@ function SignIn(props) {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={emailInputHandler}
           />
           <TextField
             variant="outlined"
@@ -60,6 +75,7 @@ function SignIn(props) {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={passInputHandler}
           />
           <Button
             type="button"

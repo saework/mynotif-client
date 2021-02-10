@@ -5,12 +5,12 @@ import { validateEmail } from "../functions";
 import { loginSaveStore } from "../actions/actions";
 
 
-export let newPassApi = (setReqMessage) => {
+export let newPassApi = (setReqMessage, email) => {
 // const currUserEmail = store.getState().rootReducer.currentUser;
     // console.log(currUserEmail);
     // this.loadBDfromServer(currUserEmail);
 
-    const email = document.getElementById('email').value;
+    //const email = document.getElementById('email').value;
     if (email){
       const validEmail = validateEmail(email);
       if (validEmail===true){
