@@ -17,7 +17,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { newPassApi } from "../api/newpass-api";
 import Copyright from "../components/copyright";
-import useStyles from "../components/signstl-conf";
+import useStyles from "../configs/signstl-conf";
 
 // function Copyright() {
 //   return (

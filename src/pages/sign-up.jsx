@@ -21,7 +21,7 @@ import { loginSaveStore } from "../actions/actions";
 import { connect } from "react-redux";
 import { signUpApi } from "../api/signup-api";
 import Copyright from "../components/copyright";
-import useStyles from "../components/signstl-conf";
+import useStyles from "../configs/signstl-conf";
 
 
 function SignUp(props) {

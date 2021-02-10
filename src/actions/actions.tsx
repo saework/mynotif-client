@@ -1,4 +1,4 @@
-import { IAction, IRootReducer, IBdRows, IBdRow } from "../interfaces";
+import { IAction, IRootReducer, IBdRows, IBdRow, IStore } from "../interfaces";
 export function drawRows(bdRows: IBdRows): IAction {
   return {
     type: "DRAW_ROWS",
@@ -39,5 +39,11 @@ export function loginSaveStore(loginData:IRootReducer): IAction {
   return {
     type: "LOGIN_SAVE_STORE",
     payload: loginData,
+  };
+}
+export function resetStore(): IAction {
+  return {
+    type: "RESET_STORE",
+    payload: 0
   };
 }

@@ -41,12 +41,12 @@ export let signUpApi = (setReqMessage, email, password, passwordRpt) => {
             if (respRes==="jwt"){
               const jwt = response.data.jwt;
               if (jwt){
-                const jwt = response.data;
+                //const jwt = response.data;
                 console.log(jwt);
               // props.loginSaveStore(jwtData);
                 const loginData = {
                   currentUser: email,
-                  jwtToken: jwt.jwtToken
+                  jwtToken: jwt
                 } 
                 store.dispatch(loginSaveStore(loginData));
                 //props.loginSaveStore(loginData);

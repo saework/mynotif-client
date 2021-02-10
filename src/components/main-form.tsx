@@ -18,13 +18,18 @@ import { IAction, IRootReducer, IBdRows, IBdRow, IStore, ItmzObj } from "../inte
 import { history } from "../store/store";
 registerLocale('ru', ru)
 
+import config from "../configs/config";
+
 // import { store } from "../store/store";
 // import { extendWith } from "lodash";
 
- const TIMEZONE: string = "Asia/Yekaterinburg";
- const DEFAULTPERIOD: string = "Без повторов";
+ //const TIMEZONE: string = "Asia/Yekaterinburg";
+ //const DEFAULTPERIOD: string = "Без повторов";
+const TIMEZONE = config.TIMEZONE;
+const DEFAULTPERIOD = config.DEFAULTPERIOD;
+const periodArr = config.periodArr;
 
-const periodArr: string[] = ["Без повторов",  "Ежедневно", "Еженедельно", "ПН-ПТ", "Ежемесячно", "Ежегодно"];
+//const periodArr: string[] = ["Без повторов",  "Ежедневно", "Еженедельно", "ПН-ПТ", "Ежемесячно", "Ежегодно"];
 //const TIMEZONE = "Europe/Moscow";
 
 const timeZones = momenttz.tz.names();

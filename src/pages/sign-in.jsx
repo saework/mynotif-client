@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 import { validateEmail } from "../functions";
 import { signInApi } from "../api/signin-api";
 import Copyright from "../components/copyright";
-import useStyles from "../components/signstl-conf";
+import useStyles from "../configs/signstl-conf";
 
 function SignIn(props) {
   const classes = useStyles();

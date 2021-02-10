@@ -1,5 +1,8 @@
 module.exports = {
-    extends: ['airbnb-typescript'],
+   extends: ['airbnb-typescript'],
+   "env": {
+    "browser": true
+  },
    parserOptions: {
      project: './tsconfig.json',
   },
@@ -16,7 +19,9 @@ module.exports = {
    ],
     // "@typescript-eslint/no-unused-vars": "warn",  
     "@typescript-eslint/comma-dangle": 0,
-    "@typescript-eslint/quotes": [1, "double"],
-    "implicit-arrow-linebreak": 0
+    // "@typescript-eslint/quotes": [1, "double"],
+    "implicit-arrow-linebreak": 0,
+    "@typescript-eslint/no-use-before-define": 0,
+    "consistent-return": 0
   }
 };

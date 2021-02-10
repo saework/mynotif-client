@@ -1,8 +1,8 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import { createLogger } from "redux-logger";
-import { routerMiddleware } from "connected-react-router";
-import { createBrowserHistory } from "history"; // версия библиотеки должна быть 4.10.1 : npm install history@4.10.1
-import { createRootReducer, initialState } from "../reducers/reducers";
+import { createStore, applyMiddleware, compose } from 'redux';
+import { createLogger } from 'redux-logger';
+import { routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history'; // версия библиотеки должна быть 4.10.1 : npm install history@4.10.1
+import { createRootReducer, initialState } from '../reducers/reducers';
 
 export const history = createBrowserHistory();
 

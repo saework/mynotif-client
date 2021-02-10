@@ -120,6 +120,9 @@ switch (action.type) {
       console.log(loginData);
       return { ...state, currentUser: loginData.currentUser, jwtToken: loginData.jwtToken };
     }
+    case "RESET_STORE": {
+      return initialState;
+    }
     default:
       return state;
   }
