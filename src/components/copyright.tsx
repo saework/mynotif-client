@@ -1,11 +1,10 @@
-
-import React from "react";
-import Typography from "@material-ui/core/Typography";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Сервис «Мои уведомления» © "}
+      {'Сервис «Мои уведомления» © '}
       {new Date().getFullYear()}
       .
     </Typography>

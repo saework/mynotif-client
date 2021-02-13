@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 // import Avatar from '@material-ui/core/Avatar';
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 // import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 // import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { validateEmail } from "../functions";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { newPassApi } from "../api/newpass-api";
-import Copyright from "../components/copyright";
-import useStyles from "../configs/signstl-conf";
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { validateEmail } from '../functions';
+import { newPassApi } from '../api/newpass-api';
+import Copyright from '../components/copyright';
+import useStyles from '../configs/signstl-conf';
 
 // function Copyright() {
 //   return (
@@ -57,17 +57,17 @@ import useStyles from "../configs/signstl-conf";
 
 function NewPass() {
   const classes = useStyles();
-  const [reqMessage, setReqMessage] = useState("");
-  const [email, setEmailVal] = useState("");
+  const [reqMessage, setReqMessage] = useState('');
+  const [email, setEmailVal] = useState('');
 
-  let updatePasswordHandler = () => {
+  const updatePasswordHandler = () => {
     newPassApi(setReqMessage, email);
   };
   const emailInputHandler = (e) => {
     e.preventDefault();
     const emailEl = e.currentTarget;
-    setEmailVal(emailEl.value)
-  }
+    setEmailVal(emailEl.value);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -78,25 +78,10 @@ function NewPass() {
           Сброс пароля
         </Typography>
         <form className={classes.form} noValidate>
-        <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email адрес"
-                name="email"
-                autoComplete="email"
-                onChange={emailInputHandler}
-              />
-            </Grid>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            className={classes.submit}
-            onClick={updatePasswordHandler}
-          >
+          <Grid item xs={12}>
+            <TextField variant="outlined" required fullWidth id="email" label="Email адрес" name="email" autoComplete="email" onChange={emailInputHandler} />
+          </Grid>
+          <Button type="button" fullWidth variant="contained" className={classes.submit} onClick={updatePasswordHandler}>
             Сменить пароль
           </Button>
           <label className="sign-up__reqMessage-label">{reqMessage}</label>

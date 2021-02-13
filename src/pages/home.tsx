@@ -8,31 +8,39 @@ import { connect } from 'react-redux';
 // } from 'connected-react-router';
 import '../style.scss';
 import { sendBDtoServer, loadBDfromServer } from '../api/home-api';
-import { loginSaveStore, resetStore } from '../actions/actions';
+import { resetStore } from '../actions/actions';
 import { history } from '../store/store';
 import MainForm from '../components/main-form';
 import MainInfo from '../components/main-info';
 import config from '../configs/config';
 import consoleLog from '../configs/console-log';
+import { IBdRow, IStore } from '../interfaces';
 
 // const { TIMEZONE } = config;
 // const { DEFAULTPERIOD } = config;
 const { TIMEZONE, DEFAULTPERIOD } = config;
 
-function Home(props) {
-  const [loading, setLoading] = useState('');
-  const [buttonAddName, setButtonAddName] = useState('Добавить');
-  const [bdPeriodVal, setBdPeriodVal] = useState(DEFAULTPERIOD);
-  const [startDate, setStartDate] = useState(new Date());
-  const [persNameVal, setPersNameVal] = useState('');
-  const [bdCommVal, setBdCommVal] = useState('');
-  const [bdTmzVal, setBdTmzVal] = useState(TIMEZONE);
+interface IProps {
+  bdRows: IBdRow[];
+  currUserEmail: string;
+  jwtToken: {};
+  resetStore: () => void;
+}
 
-  // const persNameRef = useRef<HTMLInputElement>(null);
-  const persNameRef = useRef(null);
+function Home(props: IProps) {
+  const [loading, setLoading] = useState<string>('');
+  const [buttonAddName, setButtonAddName] = useState<string>('Добавить');
+  const [bdPeriodVal, setBdPeriodVal] = useState<string>(DEFAULTPERIOD);
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [persNameVal, setPersNameVal] = useState<string>('');
+  const [bdCommVal, setBdCommVal] = useState<string>('');
+  const [bdTmzVal, setBdTmzVal] = useState<string>(TIMEZONE);
+
+  const persNameRef = useRef<HTMLInputElement>(null);
+  // const persNameRef = useRef(null);
 
   useEffect(() => {
-    const historyState = history.location.state;
+    const historyState: any = history.location.state;
     if (historyState) {
       const { needLoadData } = historyState;
       consoleLog(`useEffect - needLoadData - needLoadData: ${needLoadData}`);
@@ -82,28 +90,28 @@ function Home(props) {
     // const currUserEmail = store.getState().rootReducer.currentUser;
     loadBDfromServer(currUserEmail, setLoading);
   };
-  const { bdRows } = props;
+  // const { bdRows } = props;
   return (
     <div>
       <Container>
         <MainInfo
-          bdRows={bdRows}
-          bdPeriodVal={bdPeriodVal}
+          // bdRows={bdRows}
+          // bdPeriodVal={bdPeriodVal}
           setBdPeriodVal={setBdPeriodVal}
-          buttonAddName={buttonAddName}
+          // buttonAddName={buttonAddName}
           setButtonAddName={setButtonAddName}
-          startDate={startDate}
+          // startDate={startDate}
           setStartDate={setStartDate}
-          persNameVal={persNameVal}
+          // persNameVal={persNameVal}
           setPersNameVal={setPersNameVal}
-          bdCommVal={bdCommVal}
+          // bdCommVal={bdCommVal}
           setBdCommVal={setBdCommVal}
-          bdTmzVal={bdTmzVal}
+          // bdTmzVal={bdTmzVal}
           setBdTmzVal={setBdTmzVal}
           persNameRef={persNameRef}
         />
         <MainForm
-          bdRows={bdRows}
+          // bdRows={bdRows}
           bdPeriodVal={bdPeriodVal}
           setBdPeriodVal={setBdPeriodVal}
           buttonAddName={buttonAddName}
@@ -167,12 +175,12 @@ function Home(props) {
   );
 }
 
-const mapStateToProps = (store) => ({
+const mapStateToProps = (store: IStore) => ({
   bdRows: store.rootReducer.bdRows,
   currentUser: store.rootReducer.currentUser,
   jwtToken: store.rootReducer.jwtToken,
 });
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: any) => ({
   // goTo: (payload) => {
   //   dispatch(push(payload.path));
   // },
@@ -185,7 +193,6 @@ const mapDispatchToProps = (dispatch) => ({
   // forw: () => {
   //   dispatch(goForward());
   // },
-  loginSaveStore: (loginData) => dispatch(loginSaveStore(loginData)),
   resetStore: () => dispatch(resetStore()),
 });
 
