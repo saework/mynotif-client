@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-import { newPassApi } from '../api/newpass-api';
+import newPassApi from '../api/newpass-api';
 import Copyright from '../components/copyright';
 import useStyles from '../configs/signstl-conf';
 
@@ -17,7 +17,7 @@ function NewPass() {
   const [email, setEmailVal] = useState<string>('');
 
   const updatePasswordHandler = () => {
-    newPassApi(setReqMessage, email);
+    newPassApi(email, setReqMessage);
   };
   const emailInputHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();

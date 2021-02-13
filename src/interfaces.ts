@@ -38,3 +38,8 @@ export interface ItmzObj {
   timeZoneValue: string;
   timeZoneText: string;
 }
+export interface ISendData {
+  bdRows: IBdRow[];
+  currUserEmail: string;
+  jwtToken: {};
+}

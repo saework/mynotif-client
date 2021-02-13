@@ -9,7 +9,7 @@ import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 // import { loginSaveStore } from '../actions/actions';
-import { signInApi } from '../api/signin-api';
+import signInApi from '../api/signin-api';
 import Copyright from '../components/copyright';
 import useStyles from '../configs/signstl-conf';
 // import { ILoginData } from '../interfaces';
@@ -22,7 +22,7 @@ function SignIn() {
 
   // войти по логину и паролю
   const signInHandler = () => {
-    signInApi(setReqMessage, email, password);
+    signInApi(email, password, setReqMessage);
   };
 
   const emailInputHandler = (e: React.SyntheticEvent) => {
