@@ -13,3 +13,4 @@ build/
 # *.js
 # *.jsx
 # *.tsx
+configs/console-log.js

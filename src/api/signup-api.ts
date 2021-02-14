@@ -3,7 +3,7 @@ import axios from 'axios';
 import { history, store } from '../store/store';
 import { validateEmail } from '../functions';
 import { loginSaveStore } from '../actions/actions';
-import consoleLog from '../configs/console-log';
+// import consoleLog from '../configs/console-log';
 
 const signUpApi = (email: string, password: string, passwordRpt: string, setReqMessage: React.Dispatch<React.SetStateAction<string>>) => {
   if (email && password && passwordRpt) {
@@ -24,14 +24,14 @@ const signUpApi = (email: string, password: string, passwordRpt: string, setReqM
               if (respRes === 'jwt') {
                 const { jwt } = response.data;
                 if (jwt) {
-                  consoleLog(`signUpApi - Получен ответ от сервера - jwt: ${jwt}`);
+                  console.log(`signUpApi - Получен ответ от сервера - jwt: ${jwt}`);
                   const loginData = {
                     currentUser: email,
                     jwtToken: jwt,
                   };
                   store.dispatch(loginSaveStore(loginData));
                   localStorage.setItem('loginData', JSON.stringify(loginData));
-                  consoleLog('Регистрация прошла успешно, loginData записан в LocalStorage');
+                  console.log('Регистрация прошла успешно, loginData записан в LocalStorage');
                   bd = true;
                 } else {
                   // bd = null;
@@ -48,7 +48,7 @@ const signUpApi = (email: string, password: string, passwordRpt: string, setReqM
           })
           .then((bd) => {
             if (bd) {
-              consoleLog('signUpApi - Переход на главную страницу после регистрации');
+              console.log('signUpApi - Переход на главную страницу после регистрации');
               history.push({
                 pathname: '/home',
                 state: { needLoadData: false },
@@ -56,7 +56,7 @@ const signUpApi = (email: string, password: string, passwordRpt: string, setReqM
             }
           })
           .catch((error) => {
-            consoleLog(`Ошибка соединения:${error}`);
+            console.log(`Ошибка соединения:${error}`);
             setReqMessage('Ошибка соединения');
           });
       } else {

@@ -24,6 +24,9 @@ module.exports = {
     "@typescript-eslint/no-use-before-define": 0,
     "consistent-return": 0,
     "object-curly-newline": 0,
-    "max-len": ["error", { "code": 170 }],
+    "max-len": ["error", { "code": 200 }],
+    "no-console": 0,
+    "@typescript-eslint/no-unused-expressions": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0
   }
 };

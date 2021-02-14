@@ -3,7 +3,7 @@ import axios from 'axios';
 import { history, store } from '../store/store';
 import { validateEmail } from '../functions';
 import { loginSaveStore } from '../actions/actions';
-import consoleLog from '../configs/console-log';
+// import consoleLog from '../configs/console-log';
 
 const signInApi = (email: string, password: string, setReqMessage: React.Dispatch<React.SetStateAction<string>>) => {
   if (email && password) {
@@ -20,14 +20,14 @@ const signInApi = (email: string, password: string, setReqMessage: React.Dispatc
           let bd;
           if (response.statusText === 'OK') {
             const jwt = response.data;
-            consoleLog(`signInApi - Получен ответ от сервера - jwt: ${jwt}`);
+            console.log(`signInApi - Получен ответ от сервера - jwt: ${jwt}`);
             const loginData = {
               currentUser: email,
               jwtToken: jwt.jwtToken,
             };
             store.dispatch(loginSaveStore(loginData));
             localStorage.setItem('loginData', JSON.stringify(loginData));
-            consoleLog('Аутентификация прошла успешно, loginData записан в LocalStorage');
+            console.log('Аутентификация прошла успешно, loginData записан в LocalStorage');
             bd = true;
           } else {
             setReqMessage('Ошибка сервера');
@@ -37,7 +37,7 @@ const signInApi = (email: string, password: string, setReqMessage: React.Dispatc
         })
         .then((bd) => {
           if (bd) {
-            consoleLog('signInApi - Переход на главную страницу после аутентификации');
+            console.log('signInApi - Переход на главную страницу после аутентификации');
             history.push({
               pathname: '/home',
               state: { needLoadData: true },
@@ -49,11 +49,11 @@ const signInApi = (email: string, password: string, setReqMessage: React.Dispatc
             if (error.response.status === 401) {
               setReqMessage('Не верный логин или пароль!');
             } else {
-              consoleLog(`signInApi - Ошибка соединения:${error}`);
+              console.log(`signInApi - Ошибка соединения:${error}`);
               setReqMessage('Ошибка сервера');
             }
           } else {
-            consoleLog(`signInApi - Ошибка соединения:${error}`);
+            console.log(`signInApi - Ошибка соединения:${error}`);
             setReqMessage('Ошибка сервера');
           }
         });

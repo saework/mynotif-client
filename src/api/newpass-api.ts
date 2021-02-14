@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { validateEmail } from '../functions';
-import consoleLog from '../configs/console-log';
+// import consoleLog from '../configs/console-log';
 
 const newPassApi = (email: string, setReqMessage: React.Dispatch<React.SetStateAction<string>>) => {
   if (email) {
@@ -24,7 +24,7 @@ const newPassApi = (email: string, setReqMessage: React.Dispatch<React.SetStateA
           }
         })
         .catch((error) => {
-          consoleLog(`newPassApi - Ошибка соединения:${error}`);
+          console.log(`newPassApi - Ошибка соединения:${error}`);
         });
     } else {
       setReqMessage('Email имеет не верный формат!');

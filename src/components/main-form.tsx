@@ -72,8 +72,10 @@ function MainForm(props: IProps) {
       let bdDateVal: string = '';
       bdDateVal = moment(props.startDate).format('DD.MM.YYYY, H:mm');
       if (props.buttonAddName === 'Добавить') {
+        const id = getCurrentId() + 1;
         const newbdRow: IBdRow = {
-          id: getCurrentId() + 1,
+          id,
+          // id: getCurrentId() + 1,
           // persName: props.persNameVal,
           // bdDate: bdDateVal,
           // bdComm: props.bdCommVal,
@@ -86,6 +88,7 @@ function MainForm(props: IProps) {
           bdPeriod: bdPeriodVal,
         };
         props.addBdRow(newbdRow);
+        console.log(newbdRow); // !!!
         props.setBdCommVal('');
         props.setPersNameVal('');
         if (props.persNameRef.current !== null) {

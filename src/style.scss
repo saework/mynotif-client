@@ -4,8 +4,13 @@
 //my-block__my-button_size_m
 
 //импорт файла _main.scss
-@import 'main';
+//@import 'main';
 @import "~bootstrap/scss/bootstrap";
+
+*{
+  margin:0;
+  padding:0;
+}
 
 .sign-up__reqMessage-label{
   margin: 0px auto 5px auto;
@@ -23,7 +28,7 @@
 .main-form__button-add{
   // max-width: 700px;
   height: 70px;
-  margin: 1.5rem auto 0 auto;
+  margin: 1.7rem auto 0 auto;
 }
 .main-info__th-num{
   width: 5%;
@@ -103,6 +108,8 @@ th.main-info__th-edit{
   display: flex;
   justify-content: center;
   margin-bottom: 0;
+  height: 1.7rem;
+  padding: 0;
 }
 .react-datepicker__input-container {
    width: inherit;
@@ -129,7 +136,22 @@ th.main-info__th-edit{
 }
 
 .home__button{
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.7rem;
+}
+
+.manual__button {
+   border: none;
+   outline: none; 
+   padding: 0;
+   color: inherit;
+   background-color: transparent;
+}
+.manual__button:active {
+  border: none;
+  outline: none; 
+  padding: 0;
+  width: 30px;
+  height: 30px;
 }
 
 .d1{

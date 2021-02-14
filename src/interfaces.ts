@@ -40,6 +40,6 @@ export interface ItmzObj {
 }
 export interface ISendData {
   bdRows: IBdRow[];
-  currUserEmail: string;
+  currentUser: string;
   jwtToken: {};
 }

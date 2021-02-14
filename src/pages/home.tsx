@@ -13,7 +13,7 @@ import { history } from '../store/store';
 import MainForm from '../components/main-form';
 import MainInfo from '../components/main-info';
 import config from '../configs/config';
-import consoleLog from '../configs/console-log';
+// import consoleLog from '../configs/console-log';
 import { IBdRow, IStore } from '../interfaces';
 
 // const { TIMEZONE } = config;
@@ -22,7 +22,7 @@ const { TIMEZONE, DEFAULTPERIOD } = config;
 
 interface IProps {
   bdRows: IBdRow[];
-  currUserEmail: string;
+  currentUser: string;
   jwtToken: {};
   resetStore: () => void;
 }
@@ -43,7 +43,7 @@ function Home(props: IProps) {
     const historyState: any = history.location.state;
     if (historyState) {
       const { needLoadData } = historyState;
-      consoleLog(`useEffect - needLoadData - needLoadData: ${needLoadData}`);
+      console.log(`useEffect - needLoadData - needLoadData: ${needLoadData}`);
       if (needLoadData) {
         handlerLoadFromServer();
         historyState.needLoadData = false;
@@ -76,19 +76,20 @@ function Home(props: IProps) {
     // const bdRows = store.getState().rootReducer;
     // const currUserEmail = store.getState().rootReducer.currentUser;
     // const { jwtToken } = store.getState().rootReducer;
-    const { bdRows, currUserEmail, jwtToken } = props;
+    const { bdRows, currentUser, jwtToken } = props;
     const data = {
       bdRows,
-      currUserEmail,
+      currentUser,
       jwtToken,
     };
+    console.log(data);
     sendBDtoServer(data, setLoading);
   };
 
   let handlerLoadFromServer = () => {
-    const { currUserEmail } = props;
+    const { currentUser } = props;
     // const currUserEmail = store.getState().rootReducer.currentUser;
-    loadBDfromServer(currUserEmail, setLoading);
+    loadBDfromServer(currentUser, setLoading);
   };
   // const { bdRows } = props;
   return (

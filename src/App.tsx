@@ -27,6 +27,7 @@ class App extends React.PureComponent<IProps, IState> {
     // const jwtToken = store.getState().rootReducer.jwtToken;
     // const currentUser = this.props.currentUser;
     // const jwtToken = this.props.jwtToken;
+    console.log('!!!'); // !!!
     const { currentUser, jwtToken } = this.props;
     if (currentUser && !_.isEmpty(jwtToken)) {
       this.setState({ loggedIn: true });

@@ -75,7 +75,7 @@ function MainInfo(props: IProps) {
                       <div>
                         {/* <img className="main-info__edit" src="images/edit.svg" alt="edit"
                         onClick={() => handleEditButtonClick(bdRow.id)} onKeyDown={() => handleEditButtonClick(bdRow.id)} /> */}
-                        <button type="button" onClick={() => handleEditButtonClick(bdRow.id)} onKeyDown={() => handleEditButtonClick(bdRow.id)}>
+                        <button type="button" className="manual__button" onClick={() => handleEditButtonClick(bdRow.id)} onKeyDown={() => handleEditButtonClick(bdRow.id)}>
                           <img className="main-info__edit" src="images/edit.svg" alt="edit" />
                         </button>
                       </div>
@@ -84,7 +84,7 @@ function MainInfo(props: IProps) {
                       <div>
                         {/* <img className="main-info__edit" src="images/trash.svg" alt="del"
                          onClick={() => handleDelButtonClick(bdRow.id)} onKeyDown={() => handleDelButtonClick(bdRow.id)} /> */}
-                        <button type="button" onClick={() => handleDelButtonClick(bdRow.id)} onKeyDown={() => handleDelButtonClick(bdRow.id)}>
+                        <button type="button" className="manual__button" onClick={() => handleDelButtonClick(bdRow.id)} onKeyDown={() => handleDelButtonClick(bdRow.id)}>
                           <img className="main-info__edit" src="images/trash.svg" alt="del" />
                         </button>
                       </div>
