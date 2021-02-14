@@ -9,7 +9,7 @@ export const getCurrentId = (): number => {
 };
 export const getRowById = (bdRowId: number): IBdRow => {
   const { bdRows } = store.getState().rootReducer;
-  const bdRow = _.find(bdRows, { id: bdRowId });
+  const bdRow = _.find(bdRows as IBdRow[], { id: bdRowId }) as IBdRow;
   return bdRow;
 };
 export const validateEmail = (email: string): boolean => {

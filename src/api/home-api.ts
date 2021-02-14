@@ -46,7 +46,7 @@ export const sendBDtoServer = (data: ISendData, setLoading: React.Dispatch<React
 };
 
 // Получить список задач пользователя с сервера
-export const loadBDfromServer = (currUserEmail: string, setLoading: React.Dispatch<React.SetStateAction<string>>) => {
+export const loadBDfromServer = (currentUser: string, setLoading: React.Dispatch<React.SetStateAction<string>>) => {
   setLoading('load');
   const url = 'http://localhost:3000/load'; // !!! убрать!!
   // const url = '/load';
@@ -57,7 +57,7 @@ export const loadBDfromServer = (currUserEmail: string, setLoading: React.Dispat
     const config = {
       headers: jwtAuthHeader,
     };
-    const data = { currUserEmail };
+    const data = { currentUser };
     axios
       .post(url, data, config)
       .then((response) => {
@@ -80,7 +80,9 @@ export const loadBDfromServer = (currUserEmail: string, setLoading: React.Dispat
         //   store.dispatch(loadBD(bd));
         //   setLoading('');
         // }, 1000);
-        store.dispatch(loadBD(bd));
+        if (bd) {
+          store.dispatch(loadBD(bd));
+        }
         setLoading('');
       })
       .catch((error) => {

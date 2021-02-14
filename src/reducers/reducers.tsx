@@ -130,7 +130,7 @@ export function rootReducer(state: IRootReducer = initialState, action: IAction)
   }
 }
 
-// данные в объекте rootReducer, а не store
+// данные в объекте rootReducer
 export const createRootReducer = (history: any) =>
   combineReducers({
     router: connectRouter(history),

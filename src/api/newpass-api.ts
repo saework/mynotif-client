@@ -9,7 +9,7 @@ const newPassApi = (email: string, setReqMessage: React.Dispatch<React.SetStateA
     if (validEmail === true) {
       const url = 'http://localhost:3000/newpassword'; // !!!убрать
       // const url = '/newpassword';
-      const data = { currUserEmail: email };
+      const data = { currentUser: email };
       axios
         .post(url, {
           data,

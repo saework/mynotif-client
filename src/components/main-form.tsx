@@ -16,8 +16,8 @@ registerLocale('ru', ru);
 // const { TIMEZONE } = config;
 // const { DEFAULTPERIOD } = config;
 // const { periodArr } = config;
-const { TIMEZONE, DEFAULTPERIOD, periodArr } = config;
-
+// const { TIMEZONE, DEFAULTPERIOD, periodArr } = config;
+const { periodArr } = config;
 const timeZones = momenttz.tz.names();
 const tmzArr: ItmzObj[] = [];
 
@@ -59,8 +59,8 @@ function MainForm(props: IProps) {
   const { persNameRef, persNameVal, startDate, bdPeriodVal, bdTmzVal, bdCommVal, buttonAddName } = props;
 
   const [validated, setValidated] = useState<boolean>(false);
-  const tmzSelectField = (tmzObj: any) => <option value={tmzObj.timeZoneValue}>{tmzObj.timeZoneText}</option>;
-  const periodSelectField = (period: string) => <option value={period}>{period}</option>;
+  const tmzSelectField = (tmzObj: any) => <option value={tmzObj.timeZoneValue} key={tmzObj.timeZoneValue}>{tmzObj.timeZoneText}</option>;
+  const periodSelectField = (period: string) => <option value={period} key={period}>{period}</option>;
 
   const handleAddButtonClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -158,14 +158,16 @@ function MainForm(props: IProps) {
           <Form.Row>
             <Form.Group as={Col} controlId="bdPeriod">
               <Form.Label>Повтор:</Form.Label>
-              <Form.Control as="select" defaultValue={DEFAULTPERIOD} onChange={handleBdPeriod} value={bdPeriodVal}>
+              {/* <Form.Control as="select" defaultValue={DEFAULTPERIOD} onChange={handleBdPeriod} value={bdPeriodVal}> */}
+              <Form.Control as="select" onChange={handleBdPeriod} value={bdPeriodVal}>
                 {periodArr.map((period: string) => periodSelectField(period))}
               </Form.Control>
             </Form.Group>
 
             <Form.Group as={Col} controlId="bdTmz">
               <Form.Label>Часовой пояс:</Form.Label>
-              <Form.Control as="select" defaultValue={TIMEZONE} onChange={handleBdTmz} value={bdTmzVal}>
+              {/* <Form.Control as="select" defaultValue={TIMEZONE} onChange={handleBdTmz} value={bdTmzVal}> */}
+              <Form.Control as="select" onChange={handleBdTmz} value={bdTmzVal}>
                 {tmzArr.map((tmzObj: any) => tmzSelectField(tmzObj))}
               </Form.Control>
             </Form.Group>

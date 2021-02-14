@@ -14,14 +14,16 @@ import MainForm from '../components/main-form';
 import MainInfo from '../components/main-info';
 import config from '../configs/config';
 // import consoleLog from '../configs/console-log';
-import { IBdRow, IStore } from '../interfaces';
+// import { IBdRow, IStore } from '../interfaces';
+import { IRootReducer, IStore } from '../interfaces';
 
 // const { TIMEZONE } = config;
 // const { DEFAULTPERIOD } = config;
 const { TIMEZONE, DEFAULTPERIOD } = config;
 
 interface IProps {
-  bdRows: IBdRow[];
+  rootReducer: IRootReducer;
+  // bdRows: IBdRow[];
   currentUser: string;
   jwtToken: {};
   resetStore: () => void;
@@ -76,9 +78,10 @@ function Home(props: IProps) {
     // const bdRows = store.getState().rootReducer;
     // const currUserEmail = store.getState().rootReducer.currentUser;
     // const { jwtToken } = store.getState().rootReducer;
-    const { bdRows, currentUser, jwtToken } = props;
+    // const { bdRows, currentUser, jwtToken } = props;
+    const { rootReducer, currentUser, jwtToken } = props;
     const data = {
-      bdRows,
+      rootReducer,
       currentUser,
       jwtToken,
     };
@@ -177,7 +180,8 @@ function Home(props: IProps) {
 }
 
 const mapStateToProps = (store: IStore) => ({
-  bdRows: store.rootReducer.bdRows,
+  // bdRows: store.rootReducer.bdRows,
+  rootReducer: store.rootReducer,
   currentUser: store.rootReducer.currentUser,
   jwtToken: store.rootReducer.jwtToken,
 });

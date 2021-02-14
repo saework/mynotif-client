@@ -39,7 +39,8 @@ export interface ItmzObj {
   timeZoneText: string;
 }
 export interface ISendData {
-  bdRows: IBdRow[];
+  // bdRows: IBdRow[];
+  rootReducer: IRootReducer
   currentUser: string;
   jwtToken: {};
 }
