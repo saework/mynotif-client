@@ -3,9 +3,6 @@ import {
   Container, Alert, Row, Col, Button
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
-// import {
-//   push, go, goBack, goForward
-// } from 'connected-react-router';
 import '../style.scss';
 import { sendBDtoServer, loadBDfromServer } from '../api/home-api';
 import { resetStore } from '../actions/actions';
@@ -13,17 +10,12 @@ import { history } from '../store/store';
 import MainForm from '../components/main-form';
 import MainInfo from '../components/main-info';
 import config from '../configs/config';
-// import consoleLog from '../configs/console-log';
-// import { IBdRow, IStore } from '../interfaces';
 import { IRootReducer, IStore } from '../interfaces';
 
-// const { TIMEZONE } = config;
-// const { DEFAULTPERIOD } = config;
 const { TIMEZONE, DEFAULTPERIOD } = config;
 
 interface IProps {
   rootReducer: IRootReducer;
-  // bdRows: IBdRow[];
   currentUser: string;
   jwtToken: {};
   resetStore: () => void;
@@ -39,7 +31,6 @@ function Home(props: IProps) {
   const [bdTmzVal, setBdTmzVal] = useState<string>(TIMEZONE);
 
   const persNameRef = useRef<HTMLInputElement>(null);
-  // const persNameRef = useRef(null);
 
   useEffect(() => {
     const historyState: any = history.location.state;
@@ -73,49 +64,35 @@ function Home(props: IProps) {
     props.resetStore();
   };
 
-  // Сохранить список на сервер
+  // Сохранить список задач пользователя на сервер
   const handlerSaveToServer = () => {
-    // const bdRows = store.getState().rootReducer;
-    // const currUserEmail = store.getState().rootReducer.currentUser;
-    // const { jwtToken } = store.getState().rootReducer;
-    // const { bdRows, currentUser, jwtToken } = props;
     const { rootReducer, currentUser, jwtToken } = props;
     const data = {
       rootReducer,
       currentUser,
       jwtToken,
     };
-    console.log(data);
     sendBDtoServer(data, setLoading);
   };
 
   let handlerLoadFromServer = () => {
     const { currentUser } = props;
-    // const currUserEmail = store.getState().rootReducer.currentUser;
     loadBDfromServer(currentUser, setLoading);
   };
-  // const { bdRows } = props;
+
   return (
     <div>
       <Container>
         <MainInfo
-          // bdRows={bdRows}
-          // bdPeriodVal={bdPeriodVal}
           setBdPeriodVal={setBdPeriodVal}
-          // buttonAddName={buttonAddName}
           setButtonAddName={setButtonAddName}
-          // startDate={startDate}
           setStartDate={setStartDate}
-          // persNameVal={persNameVal}
           setPersNameVal={setPersNameVal}
-          // bdCommVal={bdCommVal}
           setBdCommVal={setBdCommVal}
-          // bdTmzVal={bdTmzVal}
           setBdTmzVal={setBdTmzVal}
           persNameRef={persNameRef}
         />
         <MainForm
-          // bdRows={bdRows}
           bdPeriodVal={bdPeriodVal}
           setBdPeriodVal={setBdPeriodVal}
           buttonAddName={buttonAddName}
@@ -180,24 +157,11 @@ function Home(props: IProps) {
 }
 
 const mapStateToProps = (store: IStore) => ({
-  // bdRows: store.rootReducer.bdRows,
   rootReducer: store.rootReducer,
   currentUser: store.rootReducer.currentUser,
   jwtToken: store.rootReducer.jwtToken,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-  // goTo: (payload) => {
-  //   dispatch(push(payload.path));
-  // },
-  // goOne: (payload) => {
-  //   dispatch(go(payload.num));
-  // },
-  // back: () => {
-  //   dispatch(goBack());
-  // },
-  // forw: () => {
-  //   dispatch(goForward());
-  // },
   resetStore: () => dispatch(resetStore()),
 });
 

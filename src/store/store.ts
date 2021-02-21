@@ -6,7 +6,10 @@ import { createRootReducer, initialState } from '../reducers/reducers';
 
 export const history = createBrowserHistory();
 
-const logger = createLogger({});
+const logger = createLogger({
+  predicate: () => process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test'
+});
+
 const conmposedEnh = compose(
   applyMiddleware(logger, routerMiddleware(history))
 );

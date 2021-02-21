@@ -1,14 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { validateEmail } from '../functions';
-// import consoleLog from '../configs/console-log';
 
 const newPassApi = (email: string, setReqMessage: React.Dispatch<React.SetStateAction<string>>) => {
   if (email) {
     const validEmail = validateEmail(email);
     if (validEmail === true) {
-      const url = 'http://localhost:3000/newpassword'; // !!!убрать
-      // const url = '/newpassword';
+      // const url = 'http://localhost:3000/newpassword';
+      const url = '/newpassword';
       const data = { currentUser: email };
       axios
         .post(url, {

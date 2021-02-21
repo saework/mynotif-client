@@ -16,10 +16,8 @@ module.exports = {
         "ts": "never",
         "tsx": "never"
       }
-   ],
-    // "@typescript-eslint/no-unused-vars": "warn",  
+   ], 
     "@typescript-eslint/comma-dangle": 0,
-    // "@typescript-eslint/quotes": [1, "double"],
     "implicit-arrow-linebreak": 0,
     "@typescript-eslint/no-use-before-define": 0,
     "consistent-return": 0,
@@ -27,6 +25,7 @@ module.exports = {
     "max-len": ["error", { "code": 200 }],
     "no-console": 0,
     "@typescript-eslint/no-unused-expressions": 0,
-    "jsx-a11y/no-noninteractive-element-interactions": 0
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
   }
 };

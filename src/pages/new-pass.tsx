@@ -30,7 +30,6 @@ function NewPass() {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h6">
-          {/* Новый пароль будет выслан на Ваш email адрес */}
           Сброс пароля
         </Typography>
         <form className={classes.form} noValidate>
@@ -49,7 +48,6 @@ function NewPass() {
           <Button type="button" fullWidth variant="contained" className={classes.submit} onClick={updatePasswordHandler}>
             Сменить пароль
           </Button>
-          {/* <label className="sign-up__reqMessage-label">{reqMessage}</label> */}
           <div className="sign-up__reqMessage-label">{reqMessage}</div>
           <Grid container>
             <Grid item xs>

@@ -7,10 +7,11 @@ workspace.code-workspace
 .gitignore
 .prettierignore
 .prettierrc.extension.json
+.eslintcache
 settings.json
 build/
+tests/
 # src/
 # *.js
 # *.jsx
 # *.tsx
-configs/console-log.js

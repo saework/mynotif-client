@@ -6,12 +6,10 @@ export function drawRows(bdRows: IBdRows): IAction {
     payload: bdRows,
   };
 }
-// export function checkIdBdRow(checkedId: number): IAction {
 export function checkIdBdRow(bdRowId: number): IAction {
   return {
     type: 'CHECK_ID_ROW',
     payload: bdRowId,
-    // payload: checkedId,
   };
 }
 export function addBdRow(bdRow: IBdRow): IAction {
@@ -21,11 +19,9 @@ export function addBdRow(bdRow: IBdRow): IAction {
   };
 }
 export function delBdRow(bdRowId: number): IAction {
-  // export function delBdRow(bdRow: IBdRow): IAction {
   return {
     type: 'DEL_BD_ROW',
     payload: bdRowId,
-    // payload: bdRow,
   };
 }
 export function editBdRow(bdRow: IBdRow): IAction {

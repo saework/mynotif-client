@@ -4,20 +4,16 @@ import axios from 'axios';
 import { history, store } from '../store/store';
 import { getLoginData } from '../functions';
 import { loadBD } from '../actions/actions';
-// import consoleLog from '../configs/console-log';
 import { ISendData } from '../interfaces';
 
 // Отправить список задач пользователя на сервер
 export const sendBDtoServer = (data: ISendData, setLoading: React.Dispatch<React.SetStateAction<string>>) => {
   setLoading('save');
-  const url = 'http://localhost:3000/home'; // !!! убрать!!
-  // const url = '/home';
+  // const url = 'http://localhost:3000/home';
+  const url = '/home';
   const jwtAuthHeader = getLoginData('jwtAuthHeader');
   if (!_.isEmpty(jwtAuthHeader)) {
-    // console.log(`sendBDtoServer - jwtAuthHeader - ${jwtAuthHeader}`);
-    console.log('sendBDtoServer - jwtAuthHeader: ');
-    console.log(jwtAuthHeader);
-    console.log(data);
+    console.log(`sendBDtoServer - jwtAuthHeader - ${JSON.stringify(jwtAuthHeader)}`);
     const config = {
       headers: jwtAuthHeader,
     };
@@ -48,12 +44,11 @@ export const sendBDtoServer = (data: ISendData, setLoading: React.Dispatch<React
 // Получить список задач пользователя с сервера
 export const loadBDfromServer = (currentUser: string, setLoading: React.Dispatch<React.SetStateAction<string>>) => {
   setLoading('load');
-  const url = 'http://localhost:3000/load'; // !!! убрать!!
-  // const url = '/load';
+  // const url = 'http://localhost:3000/load';
+  const url = '/load';
   const jwtAuthHeader = getLoginData('jwtAuthHeader');
   if (!_.isEmpty(jwtAuthHeader)) {
-    console.log('sendBDtoServer - jwtAuthHeader:');
-    console.log(jwtAuthHeader);
+    console.log(`loadBDfromServer - jwtAuthHeader - ${JSON.stringify(jwtAuthHeader)}`);
     const config = {
       headers: jwtAuthHeader,
     };

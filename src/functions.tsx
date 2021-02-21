@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import { store } from './store/store';
 import { IBdRow } from './interfaces';
-// import consoleLog from './configs/console-log';
 
 export const getCurrentId = (): number => {
   const { currentId } = store.getState().rootReducer;
@@ -19,7 +18,6 @@ export const validateEmail = (email: string): boolean => {
 };
 export const getLoginData = (dataType: string): string | {} => {
   const loginDataJSON = localStorage.getItem('loginData') as string;
-  // const loginData = JSON.parse(localStorage.getItem('loginData'));
   const loginData = JSON.parse(loginDataJSON);
   let res = null;
   if (loginData) {
@@ -31,15 +29,10 @@ export const getLoginData = (dataType: string): string | {} => {
     }
     if (dataType === 'jwtAuthHeader') {
       const { jwtToken } = loginData;
-      // console.log(loginData);
-      console.log(loginData);
       if (jwtToken) {
         res = { Authorization: `bearer ${jwtToken}` };
       }
     }
   }
-  // console.log(`getLoginData res: ${res}`);
-  console.log('getLoginData res: ');
-  console.log(res);
   return res;
 };

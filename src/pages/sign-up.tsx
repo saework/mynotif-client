@@ -7,8 +7,6 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
-// import { loginSaveStore } from '../actions/actions';
 import signUpApi from '../api/signup-api';
 import Copyright from '../components/copyright';
 import useStyles from '../configs/signstl-conf';
@@ -20,7 +18,7 @@ function SignUp() {
   const [password, setPasswordVal] = useState<string>('');
   const [passwordRpt, setPasswordRptVal] = useState<string>('');
 
-  // войти по логину и паролю
+  // Регистрация пользователя
   const signUpHandler = () => {
     signUpApi(email, password, passwordRpt, setReqMessage);
   };
@@ -47,7 +45,6 @@ function SignUp() {
         <Typography component="h1" variant="h5">
           Регистрация
         </Typography>
-        {/* <form className={classes.form} noValidate> */}
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -92,9 +89,7 @@ function SignUp() {
           <Button type="button" fullWidth variant="contained" className={classes.submit} onClick={signUpHandler}>
             <Link to="/signup">Регистрация</Link>
           </Button>
-          {/* <label className="sign-up__reqMessage-label">{reqMessage}</label> */}
           <div className="sign-up__reqMessage-label">{reqMessage}</div>
-          {/* <Grid container justifyContent="flex-end"> */}
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/login">Уже есть аккаунт? Войти</Link>
@@ -108,9 +103,5 @@ function SignUp() {
     </Container>
   );
 }
-// const mapDispatchToProps = (dispatch) => ({
-//   loginSaveStore: (loginData) => dispatch(loginSaveStore(loginData)),
-// });
 
-// export default connect(mapDispatchToProps)(SignUp);
 export default SignUp;

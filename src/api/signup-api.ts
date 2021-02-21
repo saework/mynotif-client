@@ -3,15 +3,14 @@ import axios from 'axios';
 import { history, store } from '../store/store';
 import { validateEmail } from '../functions';
 import { loginSaveStore } from '../actions/actions';
-// import consoleLog from '../configs/console-log';
 
 const signUpApi = (email: string, password: string, passwordRpt: string, setReqMessage: React.Dispatch<React.SetStateAction<string>>) => {
   if (email && password && passwordRpt) {
     if (password === passwordRpt) {
       const validEmail = validateEmail(email);
       if (validEmail === true) {
-        const url = 'http://localhost:3000/signup'; // !!! убрать!!
-        // const url = "/signup";
+        // const url = 'http://localhost:3000/signup';
+        const url = '/signup';
         axios
           .post(url, {
             username: email,
@@ -34,12 +33,10 @@ const signUpApi = (email: string, password: string, passwordRpt: string, setReqM
                   console.log('Регистрация прошла успешно, loginData записан в LocalStorage');
                   bd = true;
                 } else {
-                  // bd = null;
                   setReqMessage('Ошибка аутентификации');
                 }
               } else {
                 setReqMessage(respRes);
-                // bd = null;
               }
             } else {
               setReqMessage('Ошибка сервера');

@@ -7,12 +7,9 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
-// import { loginSaveStore } from '../actions/actions';
 import signInApi from '../api/signin-api';
 import Copyright from '../components/copyright';
 import useStyles from '../configs/signstl-conf';
-// import { ILoginData } from '../interfaces';
 
 function SignIn() {
   const classes = useStyles();
@@ -20,7 +17,7 @@ function SignIn() {
   const [email, setEmailVal] = useState<string>('');
   const [password, setPasswordVal] = useState<string>('');
 
-  // войти по логину и паролю
+  // Войти по логину и паролю
   const signInHandler = () => {
     signInApi(email, password, setReqMessage);
   };
@@ -71,7 +68,6 @@ function SignIn() {
           <Button type="button" fullWidth variant="contained" className={classes.submit} onClick={signInHandler}>
             Войти
           </Button>
-          {/* <label className="sign-up__reqMessage-label">{reqMessage}</label> */}
           <div className="sign-up__reqMessage-label">{reqMessage}</div>
           <Grid container>
             <Grid item xs>
@@ -89,9 +85,5 @@ function SignIn() {
     </Container>
   );
 }
-// const mapDispatchToProps = (dispatch : any) => ({
-//   loginSaveStore: (loginData: ILoginData) => dispatch(loginSaveStore(loginData)),
-// });
 
-// export default connect(mapDispatchToProps)(SignIn);
 export default SignIn;

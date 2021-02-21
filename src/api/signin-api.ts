@@ -3,14 +3,13 @@ import axios from 'axios';
 import { history, store } from '../store/store';
 import { validateEmail } from '../functions';
 import { loginSaveStore } from '../actions/actions';
-// import consoleLog from '../configs/console-log';
 
 const signInApi = (email: string, password: string, setReqMessage: React.Dispatch<React.SetStateAction<string>>) => {
   if (email && password) {
     const validEmail = validateEmail(email);
     if (validEmail === true) {
-      const url = 'http://localhost:3000/login'; // !!! убрать!!
-      // const url = "/login";
+      // const url = 'http://localhost:3000/login';
+      const url = '/login';
       axios
         .post(url, {
           username: email,
@@ -31,7 +30,6 @@ const signInApi = (email: string, password: string, setReqMessage: React.Dispatc
             bd = true;
           } else {
             setReqMessage('Ошибка сервера');
-            bd = false;
           }
           return bd;
         })

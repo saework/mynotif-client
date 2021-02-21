@@ -13,21 +13,10 @@ import config from '../configs/config';
 
 registerLocale('ru', ru);
 
-// const { TIMEZONE } = config;
-// const { DEFAULTPERIOD } = config;
-// const { periodArr } = config;
-// const { TIMEZONE, DEFAULTPERIOD, periodArr } = config;
 const { periodArr } = config;
 const timeZones = momenttz.tz.names();
 const tmzArr: ItmzObj[] = [];
 
-// for (const i in timeZones) {
-//   const tmzObj: ItmzObj = {
-//     timeZoneValue: timeZones[i],
-//     timeZoneText: ` (GMT${moment.tz(timeZones[i]).format('Z')}) ${timeZones[i]}`,
-//   };
-//   tmzArr.push(tmzObj);
-// }
 Object.keys(timeZones).forEach((i: any) => {
   const tmzObj: ItmzObj = {
     timeZoneValue: timeZones[i],
@@ -75,12 +64,6 @@ function MainForm(props: IProps) {
         const id = getCurrentId() + 1;
         const newbdRow: IBdRow = {
           id,
-          // id: getCurrentId() + 1,
-          // persName: props.persNameVal,
-          // bdDate: bdDateVal,
-          // bdComm: props.bdCommVal,
-          // bdTmz: props.bdTmzVal,
-          // bdPeriod: props.bdPeriodVal,
           persName: persNameVal,
           bdDate: bdDateVal,
           bdComm: bdCommVal,
@@ -88,13 +71,11 @@ function MainForm(props: IProps) {
           bdPeriod: bdPeriodVal,
         };
         props.addBdRow(newbdRow);
-        console.log(newbdRow); // !!!
         props.setBdCommVal('');
         props.setPersNameVal('');
         if (props.persNameRef.current !== null) {
           props.persNameRef.current.focus();
         }
-        // setValidated(false);
       }
       if (props.buttonAddName === 'Сохранить изменения') {
         const newbdRow = {
@@ -108,10 +89,9 @@ function MainForm(props: IProps) {
         props.editBdRow(newbdRow);
         props.setButtonAddName('Добавить');
 
-        // очищаем поля
+        // Очищаем поля
         props.setPersNameVal('');
         props.setBdCommVal('');
-        // setValidated(false);
       }
       setValidated(false);
     }
@@ -158,7 +138,6 @@ function MainForm(props: IProps) {
           <Form.Row>
             <Form.Group as={Col} controlId="bdPeriod">
               <Form.Label>Повтор:</Form.Label>
-              {/* <Form.Control as="select" defaultValue={DEFAULTPERIOD} onChange={handleBdPeriod} value={bdPeriodVal}> */}
               <Form.Control as="select" onChange={handleBdPeriod} value={bdPeriodVal}>
                 {periodArr.map((period: string) => periodSelectField(period))}
               </Form.Control>
@@ -166,7 +145,6 @@ function MainForm(props: IProps) {
 
             <Form.Group as={Col} controlId="bdTmz">
               <Form.Label>Часовой пояс:</Form.Label>
-              {/* <Form.Control as="select" defaultValue={TIMEZONE} onChange={handleBdTmz} value={bdTmzVal}> */}
               <Form.Control as="select" onChange={handleBdTmz} value={bdTmzVal}>
                 {tmzArr.map((tmzObj: any) => tmzSelectField(tmzObj))}
               </Form.Control>
@@ -178,7 +156,6 @@ function MainForm(props: IProps) {
             <Form.Control as="textarea" rows={3} onChange={handleBdComm} value={bdCommVal} />
           </Form.Group>
           <Button id="buttonAdd" type="submit" variant="success" size="lg" block className="main-form__button-add">
-            {/* Добавить */}
             {buttonAddName}
           </Button>
         </Form>
