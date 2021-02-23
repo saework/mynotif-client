@@ -26,6 +26,7 @@ module.exports = {
     "no-console": 0,
     "@typescript-eslint/no-unused-expressions": 0,
     "jsx-a11y/no-noninteractive-element-interactions": 0,
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "linebreak-style": 0
   }
 };

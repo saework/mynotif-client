@@ -9,7 +9,10 @@ import NewPass from './pages/new-pass';
 import { history } from './store/store';
 import { IStore } from './interfaces';
 
-type IProps = any;
+interface IProps {
+  currentUser: string;
+  jwtToken: {};
+}
 type IState = { loggedIn: boolean };
 
 class App extends React.PureComponent<IProps, IState> {
