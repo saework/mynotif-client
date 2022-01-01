@@ -1,5 +1,9 @@
 import { IAction, IRootReducer, IBdRows, IBdRow, ILoginData } from '../interfaces';
 
+/** Аналогично как и с reducers. Лучше чтобы всё, что относится к store лежало в одной папке
+ * store/actions/index.ts
+ */
+
 export function drawRows(bdRows: IBdRows): IAction {
   return {
     type: 'DRAW_ROWS',
