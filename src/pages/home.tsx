@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Container, Alert, Row, Col, Button
-} from 'react-bootstrap';
+import { Container, Alert, Row, Col, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import '../style.scss';
 import { sendBDtoServer, loadBDfromServer } from '../api/home-api';
@@ -13,6 +11,8 @@ import config from '../configs/config';
 import { IRootReducer, IStore } from '../interfaces';
 
 const { TIMEZONE, DEFAULTPERIOD } = config;
+
+/** Здесь и далее по папке справедливо всё что было сказано для компонент из папки components */
 
 interface IProps {
   rootReducer: IRootReducer;
@@ -32,6 +32,9 @@ function Home(props: IProps) {
 
   const persNameRef = useRef<HTMLInputElement>(null);
 
+  /** Для useEffect обязательно указывать зависимости, иначе он выполняется при каждом рендере компоненты
+   * Если тебе нужно такое поведение, то просто убери useEffect.
+   */
   useEffect(() => {
     const historyState: any = history.location.state;
     if (historyState) {
@@ -44,6 +47,7 @@ function Home(props: IProps) {
     }
   });
 
+  /** Магические строки */
   const handlerLoading = () => {
     if (loading === '') {
       return '';
@@ -66,6 +70,7 @@ function Home(props: IProps) {
 
   // Сохранить список задач пользователя на сервер
   const handlerSaveToServer = () => {
+    /** Почему деструктуризация пропсов тут? Обычно это первая строчка в компоненте */
     const { rootReducer, currentUser, jwtToken } = props;
     const data = {
       rootReducer,
@@ -74,7 +79,9 @@ function Home(props: IProps) {
     };
     sendBDtoServer(data, setLoading);
   };
-
+  /** Функция объявлена ниже своего использования.
+   * Чаще всего придерживаются правила - использовать переменную или функцию после её объявления
+   */
   let handlerLoadFromServer = () => {
     const { currentUser } = props;
     loadBDfromServer(currentUser, setLoading);
@@ -110,43 +117,20 @@ function Home(props: IProps) {
         <Alert className="message__alert_center" variant="light" id="mainLabel">
           {handlerLoading()}
         </Alert>
+        {/* Все row можно сгрупировать и вынести в отдельную компоненты */}
         <Row>
           <Col>
-            <Button
-              id="buttonSave"
-              type="button"
-              variant="info"
-              size="lg"
-              block
-              onClick={handlerSaveToServer}
-              className="home__button"
-            >
+            <Button id="buttonSave" type="button" variant="info" size="lg" block onClick={handlerSaveToServer} className="home__button">
               Сохранить список
             </Button>
           </Col>
           <Col>
-            <Button
-              id="buttonCancel"
-              type="button"
-              variant="info"
-              size="lg"
-              block
-              onClick={handlerLoadFromServer}
-              className="home__button"
-            >
+            <Button id="buttonCancel" type="button" variant="info" size="lg" block onClick={handlerLoadFromServer} className="home__button">
               Загрузить список
             </Button>
           </Col>
           <Col>
-            <Button
-              id="buttonExit"
-              type="button"
-              variant="danger"
-              size="lg"
-              block
-              onClick={handleExitButtonClick}
-              className="home__button"
-            >
+            <Button id="buttonExit" type="button" variant="danger" size="lg" block onClick={handleExitButtonClick} className="home__button">
               Выйти из аккаунта
             </Button>
           </Col>

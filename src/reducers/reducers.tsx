@@ -2,6 +2,11 @@ import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import { IAction, IRootReducer, IBdRow, ILoginData } from '../interfaces';
 
+/** Очень хорошо когда всё что связано со стейтом лежит в одной папке.
+ * Я бы перенесла этот файл в store/reducers/index.ts
+ */
+
+/** Так же очень полезно все константы выносить отдельно в constants.ts и класть под ноги */
 export const initialState: IRootReducer = {
   currentUser: '',
   currentId: 0,

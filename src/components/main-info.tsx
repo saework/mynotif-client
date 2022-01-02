@@ -6,6 +6,7 @@ import { delBdRow, checkIdBdRow } from '../actions/actions';
 import { getRowById } from '../functions';
 import { IBdRow, IStore } from '../interfaces';
 
+/** Справедливо всё, что было сказано для двух остальных компонент в этой папке */
 interface IProps {
   bdRows: IBdRow[];
   delBdRow: (bdRowId: number) => void;
@@ -48,6 +49,7 @@ function MainInfo(props: IProps) {
       <Col>
         <div className="main-info__page-capt">Сервис «Мои уведомления»</div>
         <Table responsive="sm">
+          {/* Header можно вынести в отдельный компонент, просто по семантике */}
           <thead>
             <tr>
               <th className="main-info__th-num">№</th>
@@ -64,6 +66,9 @@ function MainInfo(props: IProps) {
             {bdRows.length > 0 && (
               <>
                 {bdRows.map((bdRow, index) => (
+                  /** Это нужно вынести в отдельный компонент
+                   * В целом, почти всегда когда map возвращает jsx - выноси в отдельный компонент
+                   */
                   <tr key={bdRow.id}>
                     <td>{index + 1}</td>
                     <td>{bdRow.persName}</td>
