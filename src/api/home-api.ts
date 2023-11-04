@@ -9,8 +9,8 @@ import { ISendData } from '../interfaces';
 // Отправить список задач пользователя на сервер
 export const sendBDtoServer = (data: ISendData, setLoading: React.Dispatch<React.SetStateAction<string>>) => {
   setLoading('save');
-  // const url = 'http://localhost:3000/home';
-  const url = '/home';
+  // const url = 'http://localhost:3000/home'; // dev
+  const url = '/home'; // prod
   const jwtAuthHeader = getLoginData('jwtAuthHeader');
   if (!_.isEmpty(jwtAuthHeader)) {
     console.log(`sendBDtoServer - jwtAuthHeader - ${JSON.stringify(jwtAuthHeader)}`);
@@ -23,9 +23,6 @@ export const sendBDtoServer = (data: ISendData, setLoading: React.Dispatch<React
         if (response.statusText === 'OK') {
           const res = response.data;
           console.log(`sendBDtoServer - response.data - ${res}`);
-          // setTimeout(() => {
-          //   setLoading('');
-          // }, 1000);
           setLoading('');
         }
       })
@@ -44,8 +41,8 @@ export const sendBDtoServer = (data: ISendData, setLoading: React.Dispatch<React
 // Получить список задач пользователя с сервера
 export const loadBDfromServer = (currentUser: string, setLoading: React.Dispatch<React.SetStateAction<string>>) => {
   setLoading('load');
-  // const url = 'http://localhost:3000/load';
-  const url = '/load';
+  // const url = 'http://localhost:3000/load'; // dev
+  const url = '/load'; // prod
   const jwtAuthHeader = getLoginData('jwtAuthHeader');
   if (!_.isEmpty(jwtAuthHeader)) {
     console.log(`loadBDfromServer - jwtAuthHeader - ${JSON.stringify(jwtAuthHeader)}`);
@@ -71,10 +68,6 @@ export const loadBDfromServer = (currentUser: string, setLoading: React.Dispatch
         return bd;
       })
       .then((bd) => {
-        // setTimeout(() => {
-        //   store.dispatch(loadBD(bd));
-        //   setLoading('');
-        // }, 1000);
         if (bd) {
           store.dispatch(loadBD(bd));
         }

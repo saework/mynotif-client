@@ -1,34 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Container, Alert, Row, Col, Button
-} from 'react-bootstrap';
+import { Container, Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import '../style.scss';
 import { sendBDtoServer, loadBDfromServer } from '../api/home-api';
-import { resetStore } from '../actions/actions';
 import { history } from '../store/store';
 import MainForm from '../components/main-form';
 import MainInfo from '../components/main-info';
 import config from '../configs/config';
 import { IRootReducer, IStore } from '../interfaces';
 
-const { TIMEZONE, DEFAULTPERIOD } = config;
-
 interface IProps {
   rootReducer: IRootReducer;
   currentUser: string;
   jwtToken: {};
-  resetStore: () => void;
 }
 
 function Home(props: IProps) {
+  const { rootReducer, currentUser, jwtToken } = props;
+  const { TIME_ZONE, DEFAULT_PERIOD } = config;
   const [loading, setLoading] = useState<string>('');
-  const [buttonAddName, setButtonAddName] = useState<string>('Добавить');
-  const [bdPeriodVal, setBdPeriodVal] = useState<string>(DEFAULTPERIOD);
+  const [buttonAddName, setButtonAddName] = useState<string>('Добавить заметку');
+  const [bdPeriodVal, setBdPeriodVal] = useState<string>(DEFAULT_PERIOD);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [persNameVal, setPersNameVal] = useState<string>('');
   const [bdCommVal, setBdCommVal] = useState<string>('');
-  const [bdTmzVal, setBdTmzVal] = useState<string>(TIMEZONE);
+  const [bdTmzVal, setBdTmzVal] = useState<string>(TIME_ZONE);
+  const [formVisible, setFormVisible] = useState<boolean>(false);
 
   const persNameRef = useRef<HTMLInputElement>(null);
 
@@ -56,17 +53,8 @@ function Home(props: IProps) {
     }
   };
 
-  const handleExitButtonClick = () => {
-    localStorage.removeItem('loginData');
-    history.push({
-      pathname: '/login',
-    });
-    props.resetStore();
-  };
-
   // Сохранить список задач пользователя на сервер
   const handlerSaveToServer = () => {
-    const { rootReducer, currentUser, jwtToken } = props;
     const data = {
       rootReducer,
       currentUser,
@@ -75,8 +63,7 @@ function Home(props: IProps) {
     sendBDtoServer(data, setLoading);
   };
 
-  let handlerLoadFromServer = () => {
-    const { currentUser } = props;
+  const handlerLoadFromServer = () => {
     loadBDfromServer(currentUser, setLoading);
   };
 
@@ -91,6 +78,8 @@ function Home(props: IProps) {
           setBdCommVal={setBdCommVal}
           setBdTmzVal={setBdTmzVal}
           persNameRef={persNameRef}
+          handlerSaveToServer={handlerSaveToServer}
+          setFormVisible={setFormVisible}
         />
         <MainForm
           bdPeriodVal={bdPeriodVal}
@@ -106,51 +95,12 @@ function Home(props: IProps) {
           bdTmzVal={bdTmzVal}
           setBdTmzVal={setBdTmzVal}
           persNameRef={persNameRef}
+          formVisible={formVisible}
+          setFormVisible={setFormVisible}
         />
         <Alert className="message__alert_center" variant="light" id="mainLabel">
           {handlerLoading()}
         </Alert>
-        <Row>
-          <Col>
-            <Button
-              id="buttonSave"
-              type="button"
-              variant="info"
-              size="lg"
-              block
-              onClick={handlerSaveToServer}
-              className="home__button"
-            >
-              Сохранить список
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              id="buttonCancel"
-              type="button"
-              variant="info"
-              size="lg"
-              block
-              onClick={handlerLoadFromServer}
-              className="home__button"
-            >
-              Загрузить список
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              id="buttonExit"
-              type="button"
-              variant="danger"
-              size="lg"
-              block
-              onClick={handleExitButtonClick}
-              className="home__button"
-            >
-              Выйти из аккаунта
-            </Button>
-          </Col>
-        </Row>
       </Container>
     </div>
   );
@@ -161,8 +111,5 @@ const mapStateToProps = (store: IStore) => ({
   currentUser: store.rootReducer.currentUser,
   jwtToken: store.rootReducer.jwtToken,
 });
-const mapDispatchToProps = (dispatch: any) => ({
-  resetStore: () => dispatch(resetStore()),
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);

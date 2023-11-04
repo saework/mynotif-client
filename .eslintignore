@@ -12,6 +12,6 @@ settings.json
 build/
 tests/
 # src/
-# *.js
-# *.jsx
-# *.tsx
+#  *.js
+#  *.jsx
+#  *.tsx

@@ -9,8 +9,8 @@ const signUpApi = (email: string, password: string, passwordRpt: string, setReqM
     if (password === passwordRpt) {
       const validEmail = validateEmail(email);
       if (validEmail === true) {
-        // const url = 'http://localhost:3000/signup';
-        const url = '/signup';
+        // const url = 'http://localhost:3000/signup'; // dev
+        const url = '/signup'; // prod
         axios
           .post(url, {
             username: email,

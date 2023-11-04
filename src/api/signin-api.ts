@@ -8,8 +8,8 @@ const signInApi = (email: string, password: string, setReqMessage: React.Dispatc
   if (email && password) {
     const validEmail = validateEmail(email);
     if (validEmail === true) {
-      // const url = 'http://localhost:3000/login';
-      const url = '/login';
+      // const url = 'http://localhost:3000/login'; // dev
+      const url = '/login'; // prod
       axios
         .post(url, {
           username: email,

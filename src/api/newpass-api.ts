@@ -6,8 +6,8 @@ const newPassApi = (email: string, setReqMessage: React.Dispatch<React.SetStateA
   if (email) {
     const validEmail = validateEmail(email);
     if (validEmail === true) {
-      // const url = 'http://localhost:3000/newpassword';
-      const url = '/newpassword';
+      // const url = 'http://localhost:3000/newpassword'; // dev
+      const url = '/newpassword'; // prod
       const data = { currentUser: email };
       axios
         .post(url, {
